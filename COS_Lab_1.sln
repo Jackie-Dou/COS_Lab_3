@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COS_Lab_1", "COS_Lab_1\COS_Lab_1.csproj", "{43B37C23-FDD9-47E4-92C4-40744CB56C09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43B37C23-FDD9-47E4-92C4-40744CB56C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43B37C23-FDD9-47E4-92C4-40744CB56C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43B37C23-FDD9-47E4-92C4-40744CB56C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43B37C23-FDD9-47E4-92C4-40744CB56C09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A465A2F0-1A58-48A4-B999-8C5A5AE42695}
+	EndGlobalSection
+EndGlobal
