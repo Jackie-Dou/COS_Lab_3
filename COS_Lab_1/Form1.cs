@@ -34,7 +34,7 @@ namespace COS_Lab_1
 
         }
 
-        private double[] GetHarmonic(int swing, int frequency, int phase, int N)
+        private double[] GetHarmonic(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
@@ -46,28 +46,28 @@ namespace COS_Lab_1
             return results;
         }
 
-        private double[] GetPolyharmonic(int swing, int frequency, int phase, int N)
+        private double[] GetPolyharmonic(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             // 
             return results;
         }
 
-        private double[] GetRectangular(int swing, int frequency, int phase, int N)
+        private double[] GetRectangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             //
             return results;
         }
 
-        private double[] GetTriangular(int swing, int frequency, int phase, int N)
+        private double[] GetTriangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             //
             return results;
         }
 
-        private double[] GetSawtooth(int swing, int frequency, int phase, int N)
+        private double[] GetSawtooth(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             //
@@ -90,14 +90,24 @@ namespace COS_Lab_1
         {
             signalChart.Series[0].Points.Clear();
 
-            int swing, frequency, phase, N;
+            int swing, frequency, N;
+            double phase;
             string type;
             try
             {
                 type = cbbxSignal.Text;
-                swing = Int32.Parse(txtSwing.Text);
-                frequency = Int32.Parse(txtFrequency.Text);
-                phase = Int32.Parse(txtPhase.Text);
+                if (type == "Полигармонический")
+                {
+                    swing = Int32.Parse(txtSwing.Text);
+                    frequency = Int32.Parse(txtFrequency.Text);
+                    phase = Double.Parse(txtPhase.Text);
+                } else
+                {
+                    swing = Int32.Parse(txtSwing.Text);
+                    frequency = Int32.Parse(txtFrequency.Text);
+                    phase = Double.Parse(txtPhase.Text);
+                }
+
                 N = Int32.Parse(cbbxN.Text);
 
                 // TODO добавить ограничения ввода, связанные с внутренней логикой - типа теоремы Котельникова
@@ -157,7 +167,7 @@ namespace COS_Lab_1
         private void txtPhase_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != '-')
+            if (!Char.IsDigit(number) && number != 8 && number != '-' && number != '.')
             {
                 e.Handled = true;
             }
