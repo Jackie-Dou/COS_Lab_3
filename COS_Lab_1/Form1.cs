@@ -39,27 +39,21 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                // TODO переписать с синуса на ряды Тейлора - или что там Дементору надо
-                //double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase);
                 double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
                 results[n] = value;
             }
             return results;
         }
 
-        private double[] GetPolyharmonic(int swing, int frequency, double phase, int N)
+        private double[] GetPolyharmonic(string[] swings, string[] frequences, string[] phases, int N)
         {
             double[] results = new double[N];
-            int swing2 = 3, swing3 = 4, swing4 = 7;
-            int frequency2 = 2, frequency3 = 4, frequency4 = 6;
-            int phase2 = -4, phase3 = -6, phase4 = -8;
             for (int n = 0; n < N; n++)
             {
-                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
-                value += swing2 * sinTeylor((2 * Math.PI * frequency2 * n) / N + phase2);
-                value += swing3 * sinTeylor((2 * Math.PI * frequency3 * n) / N + phase3);
-                value += swing4 * sinTeylor((2 * Math.PI * frequency4 * n) / N + phase4);
-
+                double value = Int32.Parse(swings[0]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
+                value += Int32.Parse(swings[1]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
+                value += Int32.Parse(swings[2]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
+                value += Int32.Parse(swings[3]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
                 results[n] = value;
             }
             return results;
@@ -102,22 +96,26 @@ namespace COS_Lab_1
         {
             signalChart.Series[0].Points.Clear();
 
-            int swing, frequency, N;
-            double phase;
+            int swing = 0, frequency = 0, N = 0;
+            string[] swings = { }, frequences = { }, phases = { };
+            double phase = 0;
             string type;
             try
             {
                 type = cbbxSignal.Text;
-                if (type == "Полигармонический")
+                if (type != "Полигармонический")
                 {
                     swing = Int32.Parse(txtSwing.Text);
                     frequency = Int32.Parse(txtFrequency.Text);
                     phase = Double.Parse(txtPhase.Text);
                 } else
                 {
-                    swing = Int32.Parse(txtSwing.Text);
-                    frequency = Int32.Parse(txtFrequency.Text);
-                    phase = Double.Parse(txtPhase.Text);
+                    string swingsText = txtSwing.Text;
+                    swings = swingsText.Split(' ');
+                    string frequencesText = txtFrequency.Text;
+                    frequences = frequencesText.Split(' ');
+                    string phasesText = txtPhase.Text;
+                    phases = phasesText.Split(' ');
                 }
 
                 N = Int32.Parse(cbbxN.Text);
@@ -135,11 +133,11 @@ namespace COS_Lab_1
 
             switch (type)
             {
+                case "Полигармонический":
+                    ordinates = GetPolyharmonic(swings, frequences, phases, N);
+                    break;
                 case "Гармонический":
                     ordinates = GetHarmonic(swing, frequency, phase, N);
-                    break;
-                case "Полигармонический":
-                    ordinates = GetPolyharmonic(swing, frequency, phase, N);
                     break;
                 case "Прямоугольный":
                     ordinates = GetRectangular(swing, frequency, phase, N);
@@ -156,12 +154,28 @@ namespace COS_Lab_1
             return;
         }
 
+        private double sinTeylor(double x, double eps = 0.001)
+        {
+            double taylor = 0;
+            int tempFact = 1;
+            double tempX = x;
+            while (Math.Abs(tempX) > eps)
+            {
+                taylor += tempX;
+                tempX = tempX * Math.Pow(x, 2) * (-1);
+                tempFact += 2;
+                tempX = tempX / (tempFact * (tempFact - 1));
+            }
+            return taylor;
+        }
+
+
 
         // настройки ограничений ввода
         private void txtSwing_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8)
+            if (!Char.IsDigit(number) && number != 8 && number != ' ')
             {
                 e.Handled = true;
             }
@@ -170,7 +184,7 @@ namespace COS_Lab_1
         private void txtFrequency_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8)
+            if (!Char.IsDigit(number) && number != 8 && number != ' ')
             {
                 e.Handled = true;
             }
@@ -179,25 +193,10 @@ namespace COS_Lab_1
         private void txtPhase_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != '-' && number != '.')
+            if (!Char.IsDigit(number) && number != 8 && number != '-' && number != ',' && number != ' ')
             {
                 e.Handled = true;
             }
-        }
-
-        private double sinTeylor(double x, double eps = 0.001)
-        {
-            double taylor = 0;
-            int tempFact = 1;
-            double tempX = x ;
-            while (Math.Abs(tempX) > eps)
-            {
-                taylor += tempX ;
-                tempX = tempX * Math.Pow(x, 2)*(-1);
-                tempFact += 2;
-                tempX = tempX / (tempFact * (tempFact-1));
-            }
-            return taylor;
         }
     }
 }
