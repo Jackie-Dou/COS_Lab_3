@@ -88,7 +88,6 @@ namespace COS_Lab_1
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            // TODO где-то на форме будет менюшка выбора типа сигнала, выбирать путь исполнения
             signalChart.Series[0].Points.Clear();
 
             int swing, frequency, phase, N;
