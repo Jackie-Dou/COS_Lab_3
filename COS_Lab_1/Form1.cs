@@ -25,11 +25,16 @@ namespace COS_Lab_1
             cbbxN.Items.Add("512");
             cbbxN.Items.Add("1024");
             cbbxN.Items.Add("2048");
+            cbbxSignal.Items.Add("Гармонический");
+            cbbxSignal.Items.Add("Полигармонический");
+            cbbxSignal.Items.Add("Прямоугольный");
+            cbbxSignal.Items.Add("Треугольный");
+            cbbxSignal.Items.Add("Пилообразный");
             signalChart.Series[0]["PixelPointWidth"] = "1";
 
         }
 
-        private double[] GetChartResults(int swing, int frequency, int phase, int N)
+        private double[] GetHarmonic(int swing, int frequency, int phase, int N)
         {
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
@@ -40,6 +45,37 @@ namespace COS_Lab_1
             }
             return results;
         }
+
+        private double[] GetPolyharmonic(int swing, int frequency, int phase, int N)
+        {
+            double[] results = new double[N];
+            // 
+            return results;
+        }
+
+        private double[] GetRectangular(int swing, int frequency, int phase, int N)
+        {
+            double[] results = new double[N];
+            //
+            return results;
+        }
+
+        private double[] GetTriangular(int swing, int frequency, int phase, int N)
+        {
+            double[] results = new double[N];
+            //
+            return results;
+        }
+
+        private double[] GetSawtooth(int swing, int frequency, int phase, int N)
+        {
+            double[] results = new double[N];
+            //
+            return results;
+        }
+
+
+
 
         private void ShowChart(double[] ordinates, int N)
         {
@@ -56,8 +92,10 @@ namespace COS_Lab_1
             signalChart.Series[0].Points.Clear();
 
             int swing, frequency, phase, N;
+            string type;
             try
             {
+                type = cbbxSignal.Text;
                 swing = Int32.Parse(txtSwing.Text);
                 frequency = Int32.Parse(txtFrequency.Text);
                 phase = Int32.Parse(txtPhase.Text);
@@ -67,13 +105,31 @@ namespace COS_Lab_1
 
             } catch
             {
-                labelError.Text = "Введи нормально, угашенный ты об дерево";
+                labelError.Text = "Проверьте ввод";
                 return;
             }
-            labelError.Text = "Молодец, можешь, когда хочешь";
+            labelError.Text = "";
 
             double[] ordinates = new double[N];
-            ordinates = GetChartResults(swing, frequency, phase, N);
+
+            switch (type)
+            {
+                case "Гармонический":
+                    ordinates = GetHarmonic(swing, frequency, phase, N);
+                    break;
+                case "Полигармонический":
+                    ordinates = GetPolyharmonic(swing, frequency, phase, N);
+                    break;
+                case "Прямоугольный":
+                    ordinates = GetRectangular(swing, frequency, phase, N);
+                    break;
+                case "Треугольный":
+                    ordinates = GetTriangular(swing, frequency, phase, N);
+                    break;
+                case "Пилообразный":
+                    ordinates = GetSawtooth(swing, frequency, phase, N);
+                    break;
+            }
 
             ShowChart(ordinates, N);
             return;
