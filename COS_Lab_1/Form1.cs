@@ -40,7 +40,8 @@ namespace COS_Lab_1
             for (int n = 0; n < N; n++)
             {
                 // TODO переписать с синуса на ряды Тейлора - или что там Дементору надо
-                double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase);
+                //double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase);
+                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
                 results[n] = value;
             }
             return results;
@@ -49,7 +50,18 @@ namespace COS_Lab_1
         private double[] GetPolyharmonic(int swing, int frequency, int phase, int N)
         {
             double[] results = new double[N];
-            // 
+            int swing2 = 3, swing3 = 4, swing4 = 7;
+            int frequency2 = 40, frequency3 = 80, frequency4 = 120;
+            int phase2 = -4, phase3 = -6, phase4 = -8;
+            for (int n = 0; n < N; n++)
+            {
+                double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase);
+                value += swing2 * Math.Sin((2 * Math.PI * frequency2 * n) / N + phase2);
+                value += swing3 * Math.Sin((2 * Math.PI * frequency3 * n) / N + phase3);
+                value += swing4 * Math.Sin((2 * Math.PI * frequency4 * n) / N + phase4);
+
+                results[n] = value;
+            }
             return results;
         }
 
@@ -161,6 +173,21 @@ namespace COS_Lab_1
             {
                 e.Handled = true;
             }
+        }
+
+        private double sinTeylor(double x, double eps = 0.001)
+        {
+            double taylor = 0;
+            int tempFact = 1;
+            double tempX = x ;
+            while (Math.Abs(tempX) > eps)
+            {
+                taylor += tempX ;
+                tempX = tempX * Math.Pow(x, 2)*(-1);
+                tempFact += 2;
+                tempX /= (tempFact * (tempFact-1));
+            }
+            return taylor;
         }
     }
 }
