@@ -62,21 +62,41 @@ namespace COS_Lab_1
         private double[] GetRectangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
-            //
+            for (int n = 0; n < N; n++)
+            {
+                int i = 1;
+                double sum = 0;
+                double taylor = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
+                while (i <= 1024)
+                {
+                    sum += taylor / i;
+                    i += 2;
+                }
+                results[n] = swing*sum;
+            }
             return results;
         }
 
         private double[] GetTriangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
-            //
+            double p = 1 / (double)frequency;
+            for (int n = 0; n < N; n++)
+            {
+                double value = (swing / p) * (p - Math.Abs(n % (2 * p) - 2));
+                results[n] = value;
+            }
             return results;
         }
 
         private double[] GetSawtooth(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
-            //
+            for (int n = 0; n < N; n++)
+            {
+                /*double value = 2 * swing / Math.PI * GetSawtoonPart(frequency, n, N);
+                results[n] = value;*/
+            }
             return results;
         }
 
@@ -168,8 +188,6 @@ namespace COS_Lab_1
             }
             return taylor;
         }
-
-
 
         // настройки ограничений ввода
         private void txtSwing_KeyPress(object sender, KeyPressEventArgs e)
