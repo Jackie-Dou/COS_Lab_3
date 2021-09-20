@@ -94,13 +94,25 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                /*double value = 2 * swing / Math.PI * GetSawtoonPart(frequency, n, N);
-                results[n] = value;*/
+                double value = swing * CountSawtoon(2 * Math.PI * frequency * ((n + (phase * N / (4 * Math.PI) )) % (N/frequency)) / N)/(13.2873/2);
+                results[n] = value;
             }
             return results;
         }
 
-
+        private double CountSawtoon(double x, double eps = 0.001)
+        {
+            int i = 1;
+            double temp = Math.Sin(i)*x/i;
+            double sum = 0;
+            while (Math.Abs(temp) > eps)
+            {
+                sum += temp;
+                i++;
+                temp = Math.Sin(i)*x / i;
+            }
+            return sum;
+        }
 
 
         private void ShowChart(double[] ordinates, int N)
@@ -139,7 +151,7 @@ namespace COS_Lab_1
                 }
 
                 N = Int32.Parse(cbbxN.Text);
-
+                //запретить frequency < 1
                 // TODO добавить ограничения ввода, связанные с внутренней логикой - типа теоремы Котельникова
 
             } catch
