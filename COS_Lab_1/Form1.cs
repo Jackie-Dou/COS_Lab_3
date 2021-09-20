@@ -62,31 +62,42 @@ namespace COS_Lab_1
         private double[] GetRectangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
+            int count = N / frequency;
+            double phaseCount = phase * N / (4 * Math.PI);
             for (int n = 0; n < N; n++)
             {
-                int i = 1;
-                double sum = 0;
-                double taylor = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
-                while (i <= 1024)
-                {
-                    sum += taylor / i;
-                    i += 2;
-                }
-                results[n] = swing*sum;
+                double value = swing * CountRectangular((n + phaseCount)%count, count);
+                results[n] = value;
             }
             return results;
+        }
+
+        private double CountRectangular(double n, double maxN)
+        {
+            if (n < (maxN / 2))
+                return -1;
+            else
+                return 1;
         }
 
         private double[] GetTriangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
-            double p = 1 / (double)frequency;
+            int count = N / frequency;
+            double phaseCount = (phase + Math.PI/2) * N / (4 * Math.PI);
             for (int n = 0; n < N; n++)
             {
-                double value = (swing / p) * (p - Math.Abs(n % (2 * p) - 2));
+                double value = 2 * swing * CountTriangular((n + phaseCount) % count, count) - swing;
                 results[n] = value;
             }
             return results;
+        }
+        private double CountTriangular(double n, double maxN)
+        {
+            if (n < maxN / 2)
+                return n * 2 / maxN;
+            else
+                return 2 - (2*n / maxN);
         }
 
         private double[] GetSawtooth(int swing, int frequency, double phase, int N)
@@ -94,7 +105,7 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = swing * CountSawtoon(2 * Math.PI * frequency * ((n + (phase * N / (4 * Math.PI) )) % (N/frequency)) / N)/(13.2873/2);
+                double value = 2*swing * CountSawtoon(2 * Math.PI * frequency * ((n + ((phase + Math.PI) * N / (4 * Math.PI) )) % (N/frequency)) / N)/(13.2873/2) - swing;
                 results[n] = value;
             }
             return results;
