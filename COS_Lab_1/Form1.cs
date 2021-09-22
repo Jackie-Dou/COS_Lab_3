@@ -50,15 +50,43 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = Int32.Parse(swings[0]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
-                value += Int32.Parse(swings[1]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
-                value += Int32.Parse(swings[2]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
-                value += Int32.Parse(swings[3]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
+                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
+                value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
+                value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
+                value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
                 results[n] = value;
             }
             return results;
         }
 
+        private double?[] GetPolyharmonicTable(string[] swings, string[] frequences, string[] phases, int N)
+        {
+            int limitN = N / NOD(ParceArrToInt(frequences));
+            double?[] results = new double?[limitN];
+            for (int n = 0; n < N; n++)
+            {
+                int newN = n % limitN;
+                if (results[newN] == null)
+                {
+                    double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * newN) / N + Double.Parse(phases[0]));
+                    value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * newN) / N + Double.Parse(phases[1]));
+                    value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * newN) / N + Double.Parse(phases[2]));
+                    value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * newN) / N + Double.Parse(phases[3]));
+                    results[newN] = value;
+                }
+            }
+            return results;
+        }
+
+        private int[] ParceArrToInt(string[] arr)
+        {
+            int[] result = new int[arr.Count()];
+            for(int i=0; i<arr.Count(); i++)
+            {
+                result[i] = Int32.Parse(arr[i]);
+            }
+            return result;
+        }
         private double[] GetRectangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
@@ -219,20 +247,48 @@ namespace COS_Lab_1
             return;
         }
 
-        private double sinTeylor(double x, double eps = 0.001)
+        private double sinTeylor(double x)
         {
             double taylor = 0;
             int tempFact = 1;
             double piNum = Math.Floor(x / (2 * Math.PI));
             double newX = x - (2 * piNum * Math.PI);
             double tempX = newX;
-            while (Math.Abs(tempX) > eps)
+            while ((tempFact+1)/2<=4)
             {
                 taylor += tempX;
                 tempX = tempX * Math.Pow(newX, 2) * (-1);
                 tempFact += 2;
             }
             return taylor;
+        }
+
+        private int NOD(int[] arr)
+        {
+            int x = Math.Min(arr[0], arr[1]);
+            for (int i=2; i<arr.Count(); i++)
+            {
+                x = Math.Min(arr[i], x);
+            }
+            int Nod = x;
+            for (; Nod > 1; Nod--)
+            {
+                if (IsModZero(arr,Nod))
+                    break;
+            }
+            return Nod;
+        }
+
+        private bool IsModZero(int[] arr, int num)
+        {
+            bool f = true;
+            int i = 0;
+            while(f && i < arr.Count())
+            {
+                f = f && ((arr[i] % num) == 0);
+                i++;
+            }
+            return f;
         }
 
         // настройки ограничений ввода
