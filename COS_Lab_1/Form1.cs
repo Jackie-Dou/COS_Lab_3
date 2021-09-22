@@ -62,19 +62,17 @@ namespace COS_Lab_1
         private double[] GetRectangular(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
-            int count = N / frequency;
-            double phaseCount = phase * N / (4 * Math.PI);
             for (int n = 0; n < N; n++)
             {
-                double value = swing * CountRectangular((n + phaseCount)%count, count);
+                double value = swing * CountRectangular((2 * Math.PI * frequency * n) / N + phase); 
                 results[n] = value;
             }
             return results;
         }
 
-        private double CountRectangular(double n, double maxN)
+        private double CountRectangular(double x)
         {
-            if (n < (maxN / 2))
+            if (sinTeylor(x)<0)
                 return -1;
             else
                 return 1;
@@ -201,11 +199,13 @@ namespace COS_Lab_1
         {
             double taylor = 0;
             int tempFact = 1;
-            double tempX = x;
+            double piNum = Math.Floor(x / (2 * Math.PI));
+            double newX = x - (2 * piNum * Math.PI);
+            double tempX = newX;
             while (Math.Abs(tempX) > eps)
             {
                 taylor += tempX;
-                tempX = tempX * Math.Pow(x, 2) * (-1);
+                tempX = tempX * Math.Pow(newX, 2) * (-1);
                 tempFact += 2;
                 tempX = tempX / (tempFact * (tempFact - 1));
             }
