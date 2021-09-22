@@ -112,13 +112,13 @@ namespace COS_Lab_1
         private double CountSawtoon(double x, double eps = 0.001)
         {
             int i = 1;
-            double temp = Math.Sin(i)*x/i;
+            double temp = sinTeylor(i)*x/i;
             double sum = 0;
             while (Math.Abs(temp) > eps)
             {
                 sum += temp;
                 i++;
-                temp = Math.Sin(i)*x / i;
+                temp = sinTeylor(i)*x / i;
             }
             return sum;
         }
