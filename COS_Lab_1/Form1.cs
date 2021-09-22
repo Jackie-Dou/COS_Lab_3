@@ -39,7 +39,7 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
+                double value = swing * MathSin((2 * Math.PI * frequency * n) / N + phase%(2*Math.PI));
                 results[n] = value;
             }
             return results;
@@ -50,10 +50,10 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = Int32.Parse(swings[0]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
-                value += Int32.Parse(swings[1]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
-                value += Int32.Parse(swings[2]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
-                value += Int32.Parse(swings[3]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
+                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
+                value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
+                value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
+                value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
                 results[n] = value;
             }
             return results;
@@ -141,6 +141,7 @@ namespace COS_Lab_1
             string[] swings = { }, frequences = { }, phases = { };
             double phase = 0;
             string type;
+
             try
             {
                 type = cbbxSignal.Text;
@@ -149,7 +150,14 @@ namespace COS_Lab_1
                     swing = Int32.Parse(txtSwing.Text);
                     frequency = Int32.Parse(txtFrequency.Text);
                     phase = Double.Parse(txtPhase.Text);
-                } else
+                    N = Int32.Parse(cbbxN.Text);
+
+                    if (frequency < 1 || N <= 2 * frequency)
+                    {
+                        throw new Exception("Логические ограничения");
+                    }
+                }
+                else
                 {
                     string swingsText = txtSwing.Text;
                     swings = swingsText.Split(' ');
@@ -157,18 +165,34 @@ namespace COS_Lab_1
                     frequences = frequencesText.Split(' ');
                     string phasesText = txtPhase.Text;
                     phases = phasesText.Split(' ');
+                    N = Int32.Parse(cbbxN.Text);
+
+                    if (swings.Count() != 4 || frequences.Count() != 4 || phases.Count() != 4)
+                    {
+                        throw new Exception("Не весь ввод");
+                    }
+
+                    if (
+                        Int32.Parse(frequences[0]) < 1 ||
+                        Int32.Parse(frequences[1]) < 1 ||
+                        Int32.Parse(frequences[2]) < 1 ||
+                        Int32.Parse(frequences[3]) < 1 ||
+                        N <= 2 * Int32.Parse(frequences[0]) ||
+                        N <= 2 * Int32.Parse(frequences[1]) ||
+                        N <= 2 * Int32.Parse(frequences[2]) ||
+                        N <= 2 * Int32.Parse(frequences[3])
+                        )
+                    {
+                        throw new Exception("Логические ограничения");
+                    }
                 }
-
-                N = Int32.Parse(cbbxN.Text);
-                //запретить frequency < 1
-                // TODO добавить ограничения ввода, связанные с внутренней логикой - типа теоремы Котельникова
-
             } catch
             {
-                labelError.Text = "Проверьте ввод";
+                MessageBox.Show(
+                    "Некорректный ввод",
+                    "Сообщение");
                 return;
             }
-            labelError.Text = "";
 
             double[] ordinates = new double[N];
 
@@ -195,7 +219,7 @@ namespace COS_Lab_1
             return;
         }
 
-        private double sinTeylor(double x, double eps = 0.001)
+        private double MathSin(double x, double eps = 0.001)
         {
             double taylor = 0;
             int tempFact = 1;
@@ -207,7 +231,6 @@ namespace COS_Lab_1
                 taylor += tempX;
                 tempX = tempX * Math.Pow(newX, 2) * (-1);
                 tempFact += 2;
-                tempX = tempX / (tempFact * (tempFact - 1));
             }
             return taylor;
         }
