@@ -82,7 +82,7 @@ namespace COS_Lab_1
 
         private double[] GetTriangular(int swing, int frequency, double phase, int N)
         {
-            double[] results = new double[N];
+            double[] results = new double[N];   
             int count = N / frequency;
             double phaseCount = (phase + Math.PI/2) * N / (4 * Math.PI);
             for (int n = 0; n < N; n++)
