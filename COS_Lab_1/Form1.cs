@@ -33,7 +33,7 @@ namespace COS_Lab_1
 
         }
 
-/*        private double[] GetHarmonic(int swing, int frequency, double phase, int N)
+        private double[] GetHarmonic(int swing, int frequency, double phase, int N)
         {
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
@@ -43,7 +43,7 @@ namespace COS_Lab_1
                 results[n] = value;
             }
             return results;
-        }*/
+        }
 
         private double[] GetPolyharmonic(string[] swings, string[] frequences, string[] phases, int N)
         {
@@ -87,32 +87,46 @@ namespace COS_Lab_1
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
 
+            int swing = 0, frequency = 0;
+            double phase = 0;
+
+
             try
             {
-                    string swingsText = txtSwing.Text;
-                    swings = swingsText.Split(' ');
-                    string frequencesText = txtFrequency.Text;
-                    frequences = frequencesText.Split(' ');
-                    string phasesText = txtPhase.Text;
-                    phases = phasesText.Split(' ');
+                /*                    string swingsText = txtSwing.Text;
+                                    swings = swingsText.Split(' ');
+                                    string frequencesText = txtFrequency.Text;
+                                    frequences = frequencesText.Split(' ');
+                                    string phasesText = txtPhase.Text;
+                                    phases = phasesText.Split(' ');
+                                    N = Int32.Parse(cbbxN.Text);
+
+                                    if (swings.Count() != 3 || frequences.Count() != 3 || phases.Count() != 3)
+                                    {
+                                        throw new Exception("Не весь ввод");
+                                    }
+
+                                    if (
+                                        Int32.Parse(frequences[0]) < 1 ||
+                                        Int32.Parse(frequences[1]) < 1 ||
+                                        Int32.Parse(frequences[2]) < 1 ||
+                                        N <= 2 * Int32.Parse(frequences[0]) ||
+                                        N <= 2 * Int32.Parse(frequences[1]) ||
+                                        N <= 2 * Int32.Parse(frequences[2]) 
+                                        )
+                                    {
+                                        throw new Exception("Логические ограничения");
+                                    }     */
+
+                    swing = Int32.Parse(txtSwing.Text);
+                    frequency = Int32.Parse(txtFrequency.Text);
+                    phase = Double.Parse(txtPhase.Text);
                     N = Int32.Parse(cbbxN.Text);
 
-                    if (swings.Count() != 3 || frequences.Count() != 3 || phases.Count() != 3)
-                    {
-                        throw new Exception("Не весь ввод");
-                    }
-
-                    if (
-                        Int32.Parse(frequences[0]) < 1 ||
-                        Int32.Parse(frequences[1]) < 1 ||
-                        Int32.Parse(frequences[2]) < 1 ||
-                        N <= 2 * Int32.Parse(frequences[0]) ||
-                        N <= 2 * Int32.Parse(frequences[1]) ||
-                        N <= 2 * Int32.Parse(frequences[2]) 
-                        )
+                    if (frequency < 1 || N <= 2 * frequency)
                     {
                         throw new Exception("Логические ограничения");
-                    }              
+                    }
             } catch
             {
                 MessageBox.Show(
@@ -123,8 +137,8 @@ namespace COS_Lab_1
 
             double[] ordinates = new double[N];
 
-
-            ordinates = GetPolyharmonic(swings, frequences, phases, N);
+            ordinates = GetHarmonic(swing, frequency, phase, N);
+            // ordinates = GetPolyharmonic(swings, frequences, phases, N);
 
 
             ShowChart(ordinates, N);
