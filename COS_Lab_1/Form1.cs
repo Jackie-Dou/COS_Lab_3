@@ -52,7 +52,8 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
+                //double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
+                double value = swing * Math.Cos((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
                 results[n] = value;
             }
             return results;
@@ -63,11 +64,16 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
+                double value = 0;
+                for (int i = 0; i < swings.Count(); i++)
+                {
+                    value += Int32.Parse(swings[i]) * Math.Cos((2 * Math.PI * Int32.Parse(frequences[i]) * n) / N + Double.Parse(phases[i]));
+                }
+/*                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
                 value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
                 value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
                 value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
-                value += Int32.Parse(swings[4]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[4]) * n) / N + Double.Parse(phases[4]));
+                value += Int32.Parse(swings[4]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[4]) * n) / N + Double.Parse(phases[4]));*/
                 results[n] = value;
             }
             return results;
@@ -86,7 +92,8 @@ namespace COS_Lab_1
 
         private double CountRectangular(double x)
         {
-            if (sinTeylor(x) < 0)
+            //if (sinTeylor(x) < 0)
+            if (Math.Cos(x) < 0)
                 return -1;
             else
                 return 1;
@@ -126,13 +133,15 @@ namespace COS_Lab_1
         private double CountSawtoon(double x, double eps = 0.001)
         {
             int i = 1;
-            double temp = sinTeylor(i) * x / i;
+            //double temp = sinTeylor(i) * x / i;
+            double temp = Math.Cos(i) * x / i;
             double sum = 0;
             while (Math.Abs(temp) > eps)
             {
                 sum += temp;
                 i++;
-                temp = sinTeylor(i) * x / i;
+                //temp = sinTeylor(i) * x / i;
+                temp = Math.Cos(i) * x / i;
             }
             return sum;
         }
@@ -167,6 +176,8 @@ namespace COS_Lab_1
             signalChart.Series["1"].Points.Clear();
             restoreSignalChart.Series[0].Points.Clear();
             restoreSignalChart.Series["1"].Points.Clear();
+            chartSwing.Series[0].Points.Clear();
+            chartPhase.Series[0].Points.Clear();
 
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
@@ -174,7 +185,7 @@ namespace COS_Lab_1
             int swing = 0, frequency = 0;
             double phase = 0;
 
-
+            string msg = "Ошибка ввода";
             try
             {
                 type = cbbxSignal.Text;
@@ -187,6 +198,7 @@ namespace COS_Lab_1
 
                     if (frequency < 1 || N <= 2 * frequency)
                     {
+                        msg = "Логические ограничения!";
                         throw new Exception("Логические ограничения");
                     }
                 }
@@ -200,25 +212,15 @@ namespace COS_Lab_1
                     phases = phasesText.Split(' ');
                     N = Int32.Parse(cbbxN.Text);
 
-                    if (swings.Count() != 5 || frequences.Count() != 5 || phases.Count() != 5)
+                    if (swings.Count()!=frequences.Count() || frequences.Count() != phases.Count() || phases.Count() != swings.Count())
                     {
+                        msg = "Не весь ввод!";
                         throw new Exception("Не весь ввод");
                     }
 
-                    if (
-                        Int32.Parse(frequences[0]) < 1 ||
-                        Int32.Parse(frequences[1]) < 1 ||
-                        Int32.Parse(frequences[2]) < 1 ||
-
-                        Int32.Parse(frequences[3]) < 1 ||
-                        Int32.Parse(frequences[4]) < 1 ||
-                        N <= 2 * Int32.Parse(frequences[0]) ||
-                        N <= 2 * Int32.Parse(frequences[1]) ||
-                        N <= 2 * Int32.Parse(frequences[2]) ||
-                        N <= 2 * Int32.Parse(frequences[3]) ||
-                        N <= 2 * Int32.Parse(frequences[4])
-                        )
+                    if (!IsAccessibleFrequencesLogic(frequences, N))
                     {
+                        msg = "Логические ограничения!";
                         throw new Exception("Логические ограничения");
                     }
 
@@ -226,7 +228,7 @@ namespace COS_Lab_1
             } catch
             {
                 MessageBox.Show(
-                    "Некорректный ввод",
+                    msg,
                     "Сообщение");
                 return;
             }
@@ -254,8 +256,8 @@ namespace COS_Lab_1
             }
 
             int M = N / 2;
-            double[] amplOrdinates = new double[M + 1];
-            double[] phaseOrdinates = new double[M + 1];
+            double[] amplOrdinates = new double[M];
+            double[] phaseOrdinates = new double[M];
             amplOrdinates = GetAmplitude(ordinates, N, M);
             phaseOrdinates = GetPhase(ordinates, N, M);
 
@@ -286,8 +288,8 @@ namespace COS_Lab_1
 
         private double[] GetAmplitude(double[] sequence, int N, int M)
         {
-            double[] results = new double[M+1];
-            for (int R = 0; R <= M; R++)
+            double[] results = new double[M];
+            for (int R = 0; R < M; R++)
             {
                 results[R] = Math.Sqrt(Math.Pow(GetCoefA(sequence, N, R), 2) + Math.Pow(GetCoefB(sequence, N, R), 2));
             }
@@ -296,15 +298,15 @@ namespace COS_Lab_1
 
         private double[] GetPhase(double[] sequence, int N, int M)
         {
-            double[] results = new double[M + 1];
-            for (int R = 0; R <= M; R++)
+            double[] results = new double[M];
+            for (int R = 0; R < M; R++)
             {
-                results[R] = -1*Math.Atan(GetCoefB(sequence, N, R) / GetCoefA(sequence, N, R));
+                results[R] = Math.Atan(GetCoefB(sequence, N, R) / GetCoefA(sequence, N, R));
             }
             return results;
         }
 
-        private double GetCoefB(double[] x, int N, int R)
+        private double GetCoefA(double[] x, int N, int R)
         {
             double sum = 0;
             for(int n = 0; n < N; n++)
@@ -314,7 +316,7 @@ namespace COS_Lab_1
             return sum * 2 / N;
         }
 
-        private double GetCoefA(double[] x, int N, int R)
+        private double GetCoefB(double[] x, int N, int R)
         {
             double sum = 0;
             for (int n = 0; n < N; n++)
@@ -336,40 +338,27 @@ namespace COS_Lab_1
         private double GetRestoredOrdinate(double[] amplitude, double[] phase, int n, int N, int M)
         {
             double sum = 0;
-            for (int R = 0; R <= M; R++)
+            for (int R = 0; R < M; R++)
             {
                 //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
                 sum += amplitude[R] * Math.Cos(2 * Math.PI * R * n / N - phase[R]);
+                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N - phase[R]);
             }
             return sum;
         }
 
         // настройки ограничений ввода
-        private void txtSwing_KeyPress(object sender, KeyPressEventArgs e)
+        private bool IsAccessibleFrequencesLogic(string[] freq, int N)
         {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != ' ')
+            bool flag = true;
+            int i = 0;
+            while(flag && i < freq.Count())
             {
-                e.Handled = true;
+                flag &= (Int32.Parse(freq[i]) > 1);
+                flag &= (N > 2 * Int32.Parse(freq[i]));
+                i++;
             }
-        }
-
-        private void txtFrequency_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != ' ')
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void txtPhase_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != '-' && number != ',' && number != ' ')
-            {
-                e.Handled = true;
-            }
+            return flag;
         }
 
         private void txtEnter_KeyDown(object sender, KeyEventArgs e)
