@@ -19,21 +19,30 @@ namespace COS_Lab_1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            signalChart.Series.Add("1");
             cbbxN.Items.Add("64");
             cbbxN.Items.Add("128");
             cbbxN.Items.Add("256");
             cbbxN.Items.Add("512");
             cbbxN.Items.Add("1024");
             cbbxN.Items.Add("2048");
+
             cbbxSignal.Items.Add("Гармонический");
             cbbxSignal.Items.Add("Полигармонический");
             cbbxSignal.Items.Add("Прямоугольный");
             cbbxSignal.Items.Add("Треугольный");
             cbbxSignal.Items.Add("Пилообразный");
+
+            signalChart.Series.Add("1");
+            restoreSignalChart.Series.Add("1");
+
             signalChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             signalChart.Series[0].Color = Color.Red;
             signalChart.Series["1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+
+            restoreSignalChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            restoreSignalChart.Series[0].Color = Color.Green;
+            restoreSignalChart.Series["1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            restoreSignalChart.Series["1"].Color = Color.Yellow;
             //signalChart.Series[0]["PixelPointWidth"] = "1";
 
         }
@@ -128,12 +137,15 @@ namespace COS_Lab_1
             return sum;
         }
 
-        private void ShowChart(double[] ordinates, int N)
+        private void ShowCharts(double[] ordinates, double[] restoreOrdinates, int N)
         {
             for (int n = 0; n < N; n++)
             {
                 signalChart.Series[0].Points.AddXY(n, ordinates[n]);
                 signalChart.Series["1"].Points.AddXY(n, ordinates[n]);
+
+                restoreSignalChart.Series[0].Points.AddXY(n, restoreOrdinates[n]);
+                restoreSignalChart.Series["1"].Points.AddXY(n, restoreOrdinates[n]);
             }
             return;
         }
@@ -153,6 +165,8 @@ namespace COS_Lab_1
         {
             signalChart.Series[0].Points.Clear();
             signalChart.Series["1"].Points.Clear();
+            restoreSignalChart.Series[0].Points.Clear();
+            restoreSignalChart.Series["1"].Points.Clear();
 
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
@@ -239,15 +253,17 @@ namespace COS_Lab_1
                     break;
             }
 
-            ShowChart(ordinates, N);
-
             int M = N / 2;
             double[] amplOrdinates = new double[M + 1];
             double[] phaseOrdinates = new double[M + 1];
             amplOrdinates = GetAmplitude(ordinates, N, M);
             phaseOrdinates = GetPhase(ordinates, N, M);
 
+            double[] ordinatesRestore = new double[N];
+            ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M);
+
             ShowSpectres(amplOrdinates, phaseOrdinates, M);
+            ShowCharts(ordinates, ordinatesRestore, N);
             return;
         }
 
@@ -310,7 +326,7 @@ namespace COS_Lab_1
         private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M)
         {
             double[] results = new double[N];
-            for (int n = 0; n < N; N++)
+            for (int n = 0; n < N; n++)
             {
                 results[n] = GetRestoredOrdinate(amplitude, phase, n, N, M);
             }
@@ -322,8 +338,8 @@ namespace COS_Lab_1
             double sum = 0;
             for (int R = 0; R <= M; R++)
             {
-                sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
-                //sum += amplitude[R] * Math.Cos(2 * Math.PI * R * n / N - phase[R]);
+                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
+                sum += amplitude[R] * Math.Cos(2 * Math.PI * R * n / N - phase[R]);
             }
             return sum;
         }
