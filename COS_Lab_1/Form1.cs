@@ -118,6 +118,12 @@ namespace COS_Lab_1
 
 
             ShowChart(ordinates, N);
+
+            int M = N / 2;
+            double[] amplOrdinates = new double[M + 1];
+            double[] phaseOrdinates = new double[M + 1];
+            amplOrdinates = GetAmplitude(ordinates, N, M);
+            phaseOrdinates = GetPhase(ordinates, N, M);
             return;
         }
 
@@ -148,6 +154,46 @@ namespace COS_Lab_1
                 i++;
             }
             return f;
+        }
+
+        private double[] GetAmplitude(double[] sequence, int N, int M)
+        {
+            double[] results = new double[M+1];
+            for (int R = 0; R <= M; R++)
+            {
+                results[R] = Math.Sqrt(Math.Pow(GetCoefA(sequence, N, R), 2) + Math.Pow(GetCoefB(sequence, N, R), 2));
+            }
+            return results;
+        }
+
+        private double[] GetPhase(double[] sequence, int N, int M)
+        {
+            double[] results = new double[M + 1];
+            for (int R = 0; R <= M; R++)
+            {
+                results[R] = -1*Math.Atan(GetCoefB(sequence, N, R) / GetCoefA(sequence, N, R));
+            }
+            return results;
+        }
+
+        private double GetCoefA(double[] x, int N, int R)
+        {
+            double sum = 0;
+            for(int n = 0; n < N; n++)
+            {
+                sum += x[n] * Math.Cos(2 * Math.PI * n * R / N);
+            }
+            return sum * 2 / N;
+        }
+
+        private double GetCoefB(double[] x, int N, int R)
+        {
+            double sum = 0;
+            for (int n = 0; n < N; n++)
+            {
+                sum += x[n] * sinTeylor(2 * Math.PI * n * R / N);
+            }
+            return sum * 2 / N;
         }
 
         // настройки ограничений ввода
