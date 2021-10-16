@@ -69,6 +69,16 @@ namespace COS_Lab_1
             return;
         }
 
+        private void ShowSpectres(double[] amplOrdinates, double[]  phaseOrdinates, int M)
+        {
+            for (int n = 0; n < M; n++)
+            {
+                chartSwing.Series[0].Points.AddXY(n, amplOrdinates[n]);
+                chartPhase.Series[0].Points.AddXY(n, phaseOrdinates[n]);
+            }
+            return;
+        }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
             signalChart.Series[0].Points.Clear();
@@ -124,6 +134,8 @@ namespace COS_Lab_1
             double[] phaseOrdinates = new double[M + 1];
             amplOrdinates = GetAmplitude(ordinates, N, M);
             phaseOrdinates = GetPhase(ordinates, N, M);
+
+            ShowSpectres(amplOrdinates, phaseOrdinates, M);
             return;
         }
 
