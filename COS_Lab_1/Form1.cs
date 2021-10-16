@@ -203,7 +203,7 @@ namespace COS_Lab_1
             double sum = 0;
             for (int n = 0; n < N; n++)
             {
-                sum += x[n] * sinTeylor(2 * Math.PI * n * R / N);
+                sum += x[n] * Math.Sin(2 * Math.PI * n * R / N);
             }
             return sum * 2 / N;
         }
