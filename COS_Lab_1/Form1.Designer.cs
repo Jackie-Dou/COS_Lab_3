@@ -88,7 +88,7 @@ namespace COS_Lab_1
             this.txtSwing.Name = "txtSwing";
             this.txtSwing.Size = new System.Drawing.Size(158, 22);
             this.txtSwing.TabIndex = 1;
-            this.txtSwing.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSwing_KeyPress);
+            this.txtSwing.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEnter_KeyDown);
             // 
             // txtFrequency
             // 
@@ -96,7 +96,7 @@ namespace COS_Lab_1
             this.txtFrequency.Name = "txtFrequency";
             this.txtFrequency.Size = new System.Drawing.Size(188, 22);
             this.txtFrequency.TabIndex = 2;
-            this.txtFrequency.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFrequency_KeyPress);
+            this.txtFrequency.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEnter_KeyDown);
             // 
             // txtPhase
             // 
@@ -104,14 +104,14 @@ namespace COS_Lab_1
             this.txtPhase.Name = "txtPhase";
             this.txtPhase.Size = new System.Drawing.Size(264, 22);
             this.txtPhase.TabIndex = 3;
-            this.txtPhase.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhase_KeyPress);
+            this.txtPhase.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEnter_KeyDown);
             // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1273, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1273, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 

@@ -57,6 +57,8 @@ namespace COS_Lab_1
                 double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
                 value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
                 value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
+                value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
+                value += Int32.Parse(swings[4]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[4]) * n) / N + Double.Parse(phases[4]));
                 results[n] = value;
             }
             return results;
@@ -142,6 +144,7 @@ namespace COS_Lab_1
             {
                 chartSwing.Series[0].Points.AddXY(n, amplOrdinates[n]);
                 chartPhase.Series[0].Points.AddXY(n, phaseOrdinates[n]);
+                
             }
             return;
         }
@@ -183,7 +186,7 @@ namespace COS_Lab_1
                     phases = phasesText.Split(' ');
                     N = Int32.Parse(cbbxN.Text);
 
-                    if (swings.Count() != 3 || frequences.Count() != 3 || phases.Count() != 3)
+                    if (swings.Count() != 5 || frequences.Count() != 5 || phases.Count() != 5)
                     {
                         throw new Exception("Не весь ввод");
                     }
@@ -192,9 +195,14 @@ namespace COS_Lab_1
                         Int32.Parse(frequences[0]) < 1 ||
                         Int32.Parse(frequences[1]) < 1 ||
                         Int32.Parse(frequences[2]) < 1 ||
+
+                        Int32.Parse(frequences[3]) < 1 ||
+                        Int32.Parse(frequences[4]) < 1 ||
                         N <= 2 * Int32.Parse(frequences[0]) ||
                         N <= 2 * Int32.Parse(frequences[1]) ||
-                        N <= 2 * Int32.Parse(frequences[2])
+                        N <= 2 * Int32.Parse(frequences[2]) ||
+                        N <= 2 * Int32.Parse(frequences[3]) ||
+                        N <= 2 * Int32.Parse(frequences[4])
                         )
                     {
                         throw new Exception("Логические ограничения");
@@ -280,7 +288,7 @@ namespace COS_Lab_1
             return results;
         }
 
-        private double GetCoefA(double[] x, int N, int R)
+        private double GetCoefB(double[] x, int N, int R)
         {
             double sum = 0;
             for(int n = 0; n < N; n++)
@@ -290,7 +298,7 @@ namespace COS_Lab_1
             return sum * 2 / N;
         }
 
-        private double GetCoefB(double[] x, int N, int R)
+        private double GetCoefA(double[] x, int N, int R)
         {
             double sum = 0;
             for (int n = 0; n < N; n++)
@@ -347,5 +355,22 @@ namespace COS_Lab_1
                 e.Handled = true;
             }
         }
+
+        private void txtEnter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.Control | Keys.V) ||
+                e.KeyData == (Keys.Control | Keys.C) ||
+                e.KeyData == (Keys.Control | Keys.A) ||
+                (char.IsDigit((char)e.KeyCode)) ||
+                (e.KeyCode == Keys.Back) || 
+                (e.KeyCode == Keys.Space))
+            {
+                e.SuppressKeyPress = false;
+            }
+            else
+            {
+                e.SuppressKeyPress = true;
+            }
         }
+    }
 }
