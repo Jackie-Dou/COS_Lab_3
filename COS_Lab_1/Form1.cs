@@ -26,6 +26,11 @@ namespace COS_Lab_1
             cbbxN.Items.Add("512");
             cbbxN.Items.Add("1024");
             cbbxN.Items.Add("2048");
+            cbbxSignal.Items.Add("Гармонический");
+            cbbxSignal.Items.Add("Полигармонический");
+            cbbxSignal.Items.Add("Прямоугольный");
+            cbbxSignal.Items.Add("Треугольный");
+            cbbxSignal.Items.Add("Пилообразный");
             signalChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             signalChart.Series[0].Color = Color.Red;
             signalChart.Series["1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -38,8 +43,7 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase);
-                //double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase);
+                double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
                 results[n] = value;
             }
             return results;
@@ -50,14 +54,77 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                double value = Int32.Parse(swings[0]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
-                value += Int32.Parse(swings[1]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
-                value += Int32.Parse(swings[2]) * sinTeylor((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
+                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
+                value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
+                value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
                 results[n] = value;
             }
             return results;
         }
 
+        private double[] GetRectangular(int swing, int frequency, double phase, int N)
+        {
+            double[] results = new double[N];
+            for (int n = 0; n < N; n++)
+            {
+                double value = swing * CountRectangular((2 * Math.PI * frequency * n) / N + phase);
+                results[n] = value;
+            }
+            return results;
+        }
+
+        private double CountRectangular(double x)
+        {
+            if (sinTeylor(x) < 0)
+                return -1;
+            else
+                return 1;
+        }
+
+        private double[] GetTriangular(int swing, int frequency, double phase, int N)
+        {
+            double[] results = new double[N];
+            int count = N / frequency;
+            double phaseCount = (phase + Math.PI / 2) * N / (4 * Math.PI);
+            for (int n = 0; n < N; n++)
+            {
+                double value = 2 * swing * CountTriangular((n + phaseCount) % count, count) - swing;
+                results[n] = value;
+            }
+            return results;
+        }
+        private double CountTriangular(double n, double maxN)
+        {
+            if (n < maxN / 2)
+                return n * 2 / maxN;
+            else
+                return 2 - (2 * n / maxN);
+        }
+
+        private double[] GetSawtooth(int swing, int frequency, double phase, int N)
+        {
+            double[] results = new double[N];
+            for (int n = 0; n < N; n++)
+            {
+                double value = 2 * swing * CountSawtoon(2 * Math.PI * frequency * ((n + ((phase + Math.PI) * N / (4 * Math.PI))) % (N / frequency)) / N) / (13.2873 / 2) - swing;
+                results[n] = value;
+            }
+            return results;
+        }
+
+        private double CountSawtoon(double x, double eps = 0.001)
+        {
+            int i = 1;
+            double temp = sinTeylor(i) * x / i;
+            double sum = 0;
+            while (Math.Abs(temp) > eps)
+            {
+                sum += temp;
+                i++;
+                temp = sinTeylor(i) * x / i;
+            }
+            return sum;
+        }
 
         private void ShowChart(double[] ordinates, int N)
         {
@@ -86,38 +153,16 @@ namespace COS_Lab_1
 
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
-
+            string type;
             int swing = 0, frequency = 0;
             double phase = 0;
 
 
             try
             {
-                /*                    string swingsText = txtSwing.Text;
-                                    swings = swingsText.Split(' ');
-                                    string frequencesText = txtFrequency.Text;
-                                    frequences = frequencesText.Split(' ');
-                                    string phasesText = txtPhase.Text;
-                                    phases = phasesText.Split(' ');
-                                    N = Int32.Parse(cbbxN.Text);
-
-                                    if (swings.Count() != 3 || frequences.Count() != 3 || phases.Count() != 3)
-                                    {
-                                        throw new Exception("Не весь ввод");
-                                    }
-
-                                    if (
-                                        Int32.Parse(frequences[0]) < 1 ||
-                                        Int32.Parse(frequences[1]) < 1 ||
-                                        Int32.Parse(frequences[2]) < 1 ||
-                                        N <= 2 * Int32.Parse(frequences[0]) ||
-                                        N <= 2 * Int32.Parse(frequences[1]) ||
-                                        N <= 2 * Int32.Parse(frequences[2]) 
-                                        )
-                                    {
-                                        throw new Exception("Логические ограничения");
-                                    }     */
-
+                type = cbbxSignal.Text;
+                if (type != "Полигармонический")
+                {
                     swing = Int32.Parse(txtSwing.Text);
                     frequency = Int32.Parse(txtFrequency.Text);
                     phase = Double.Parse(txtPhase.Text);
@@ -127,6 +172,35 @@ namespace COS_Lab_1
                     {
                         throw new Exception("Логические ограничения");
                     }
+                }
+                else
+                {
+                    string swingsText = txtSwing.Text;
+                    swings = swingsText.Split(' ');
+                    string frequencesText = txtFrequency.Text;
+                    frequences = frequencesText.Split(' ');
+                    string phasesText = txtPhase.Text;
+                    phases = phasesText.Split(' ');
+                    N = Int32.Parse(cbbxN.Text);
+
+                    if (swings.Count() != 3 || frequences.Count() != 3 || phases.Count() != 3)
+                    {
+                        throw new Exception("Не весь ввод");
+                    }
+
+                    if (
+                        Int32.Parse(frequences[0]) < 1 ||
+                        Int32.Parse(frequences[1]) < 1 ||
+                        Int32.Parse(frequences[2]) < 1 ||
+                        N <= 2 * Int32.Parse(frequences[0]) ||
+                        N <= 2 * Int32.Parse(frequences[1]) ||
+                        N <= 2 * Int32.Parse(frequences[2])
+                        )
+                    {
+                        throw new Exception("Логические ограничения");
+                    }
+
+                }
             } catch
             {
                 MessageBox.Show(
@@ -138,8 +212,24 @@ namespace COS_Lab_1
             double[] ordinates = new double[N];
 
             ordinates = GetHarmonic(swing, frequency, phase, N);
-            // ordinates = GetPolyharmonic(swings, frequences, phases, N);
-
+            switch (type)
+            {
+                case "Полигармонический":
+                    ordinates = GetPolyharmonic(swings, frequences, phases, N);
+                    break;
+                case "Гармонический":
+                    ordinates = GetHarmonic(swing, frequency, phase, N);
+                    break;
+                case "Прямоугольный":
+                    ordinates = GetRectangular(swing, frequency, phase, N);
+                    break;
+                case "Треугольный":
+                    ordinates = GetTriangular(swing, frequency, phase, N);
+                    break;
+                case "Пилообразный":
+                    ordinates = GetSawtooth(swing, frequency, phase, N);
+                    break;
+            }
 
             ShowChart(ordinates, N);
 
@@ -168,18 +258,6 @@ namespace COS_Lab_1
                 tempFact += 2;
             }
             return taylor;
-        }
-
-        private bool IsModZero(int[] arr, int num)
-        {
-            bool f = true;
-            int i = 0;
-            while(f && i < arr.Count())
-            {
-                f = f && ((arr[i] % num) == 0);
-                i++;
-            }
-            return f;
         }
 
         private double[] GetAmplitude(double[] sequence, int N, int M)
@@ -269,5 +347,5 @@ namespace COS_Lab_1
                 e.Handled = true;
             }
         }
-    }
+        }
 }
