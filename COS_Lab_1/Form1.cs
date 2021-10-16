@@ -221,6 +221,26 @@ namespace COS_Lab_1
             }
             return sum * 2 / N;
         }
+        private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M)
+        {
+            double[] results = new double[N];
+            for (int n = 0; n < N; N++)
+            {
+                results[n] = GetRestoredOrdinate(amplitude, phase, n, N, M);
+            }
+            return results;
+        }
+
+        private double GetRestoredOrdinate(double[] amplitude, double[] phase, int n, int N, int M)
+        {
+            double sum = 0;
+            for (int R = 0; R <= M; R++)
+            {
+                sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
+                //sum += amplitude[R] * Math.Cos(2 * Math.PI * R * n / N - phase[R]);
+            }
+            return sum;
+        }
 
         // настройки ограничений ввода
         private void txtSwing_KeyPress(object sender, KeyPressEventArgs e)
