@@ -28,9 +28,9 @@ namespace COS_Lab_1
 
             cbbxSignal.Items.Add("Гармонический");
             cbbxSignal.Items.Add("Полигармонический");
-            cbbxSignal.Items.Add("Прямоугольный");
-            cbbxSignal.Items.Add("Треугольный");
-            cbbxSignal.Items.Add("Пилообразный");
+            //cbbxSignal.Items.Add("Прямоугольный");
+            //cbbxSignal.Items.Add("Треугольный");
+            //cbbxSignal.Items.Add("Пилообразный");
 
             signalChart.Series.Add("1");
             restoreSignalChart.Series.Add("1");
@@ -52,8 +52,7 @@ namespace COS_Lab_1
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                //double value = swing * sinTeylor((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
-                double value = swing * Math.Cos((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
+                double value = swing * Math.Sin((2 * Math.PI * frequency * n) / N + phase % (2 * Math.PI));
                 results[n] = value;
             }
             return results;
@@ -67,83 +66,11 @@ namespace COS_Lab_1
                 double value = 0;
                 for (int i = 0; i < swings.Count(); i++)
                 {
-                    value += Int32.Parse(swings[i]) * Math.Cos((2 * Math.PI * Int32.Parse(frequences[i]) * n) / N + Double.Parse(phases[i]));
+                    value += Int32.Parse(swings[i]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[i]) * n) / N + Double.Parse(phases[i]));
                 }
-/*                double value = Int32.Parse(swings[0]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[0]) * n) / N + Double.Parse(phases[0]));
-                value += Int32.Parse(swings[1]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[1]) * n) / N + Double.Parse(phases[1]));
-                value += Int32.Parse(swings[2]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[2]) * n) / N + Double.Parse(phases[2]));
-                value += Int32.Parse(swings[3]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[3]) * n) / N + Double.Parse(phases[3]));
-                value += Int32.Parse(swings[4]) * Math.Sin((2 * Math.PI * Int32.Parse(frequences[4]) * n) / N + Double.Parse(phases[4]));*/
                 results[n] = value;
             }
             return results;
-        }
-
-        private double[] GetRectangular(int swing, int frequency, double phase, int N)
-        {
-            double[] results = new double[N];
-            for (int n = 0; n < N; n++)
-            {
-                double value = swing * CountRectangular((2 * Math.PI * frequency * n) / N + phase);
-                results[n] = value;
-            }
-            return results;
-        }
-
-        private double CountRectangular(double x)
-        {
-            //if (sinTeylor(x) < 0)
-            if (Math.Cos(x) < 0)
-                return -1;
-            else
-                return 1;
-        }
-
-        private double[] GetTriangular(int swing, int frequency, double phase, int N)
-        {
-            double[] results = new double[N];
-            int count = N / frequency;
-            double phaseCount = (phase + Math.PI / 2) * N / (4 * Math.PI);
-            for (int n = 0; n < N; n++)
-            {
-                double value = 2 * swing * CountTriangular((n + phaseCount) % count, count) - swing;
-                results[n] = value;
-            }
-            return results;
-        }
-        private double CountTriangular(double n, double maxN)
-        {
-            if (n < maxN / 2)
-                return n * 2 / maxN;
-            else
-                return 2 - (2 * n / maxN);
-        }
-
-        private double[] GetSawtooth(int swing, int frequency, double phase, int N)
-        {
-            double[] results = new double[N];
-            for (int n = 0; n < N; n++)
-            {
-                double value = 2 * swing * CountSawtoon(2 * Math.PI * frequency * ((n + ((phase + Math.PI) * N / (4 * Math.PI))) % (N / frequency)) / N) / (13.2873 / 2) - swing;
-                results[n] = value;
-            }
-            return results;
-        }
-
-        private double CountSawtoon(double x, double eps = 0.001)
-        {
-            int i = 1;
-            //double temp = sinTeylor(i) * x / i;
-            double temp = Math.Cos(i) * x / i;
-            double sum = 0;
-            while (Math.Abs(temp) > eps)
-            {
-                sum += temp;
-                i++;
-                //temp = sinTeylor(i) * x / i;
-                temp = Math.Cos(i) * x / i;
-            }
-            return sum;
         }
 
         private void ShowCharts(double[] ordinates, double[] restoreOrdinates, int N)
@@ -244,15 +171,6 @@ namespace COS_Lab_1
                 case "Гармонический":
                     ordinates = GetHarmonic(swing, frequency, phase, N);
                     break;
-                case "Прямоугольный":
-                    ordinates = GetRectangular(swing, frequency, phase, N);
-                    break;
-                case "Треугольный":
-                    ordinates = GetTriangular(swing, frequency, phase, N);
-                    break;
-                case "Пилообразный":
-                    ordinates = GetSawtooth(swing, frequency, phase, N);
-                    break;
             }
 
             int M = N / 2;
@@ -269,7 +187,7 @@ namespace COS_Lab_1
             return;
         }
 
-        private double sinTeylor(double x, double eps = 0.0001)
+/*        private double sinTeylor(double x, double eps = 0.0001)
         {
             double taylor = 0;
             int tempFact = 1;
@@ -284,7 +202,7 @@ namespace COS_Lab_1
                 tempFact += 2;
             }
             return taylor;
-        }
+        }*/
 
         private double[] GetAmplitude(double[] sequence, int N, int M)
         {
@@ -311,9 +229,9 @@ namespace COS_Lab_1
             double sum = 0;
             for(int n = 0; n < N; n++)
             {
-                sum += x[n] * Math.Cos(2 * Math.PI * n * R / N);
+                sum += x[n] * Math.Cos(2.0 * Math.PI * n * R / N);
             }
-            return sum * 2 / N;
+            return sum * 2.0 / N;
         }
 
         private double GetCoefB(double[] x, int N, int R)
@@ -321,9 +239,9 @@ namespace COS_Lab_1
             double sum = 0;
             for (int n = 0; n < N; n++)
             {
-                sum += x[n] * Math.Sin(2 * Math.PI * n * R / N);
+                sum += x[n] * Math.Sin(2.0 * Math.PI * n * R / N);
             }
-            return sum * 2 / N;
+            return sum * 2.0 / N;
         }
         private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M)
         {
@@ -341,7 +259,7 @@ namespace COS_Lab_1
             for (int R = 0; R < M; R++)
             {
                 //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
-                sum += amplitude[R] * Math.Cos(2 * Math.PI * R * n / N - phase[R]);
+                sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
                 //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N - phase[R]);
             }
             return sum;
