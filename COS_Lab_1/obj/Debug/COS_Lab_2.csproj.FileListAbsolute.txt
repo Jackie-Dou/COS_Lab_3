@@ -1,0 +1,10 @@
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\bin\Debug\COS_Lab_1.exe.config
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\bin\Debug\COS_Lab_1.exe
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\bin\Debug\COS_Lab_1.pdb
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_2.csproj.AssemblyReference.cache
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_1.Form1.resources
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_1.Properties.Resources.resources
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_2.csproj.GenerateResource.cache
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_2.csproj.CoreCompileInputs.cache
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_1.exe
+F:\Univer\Course_4_Term_1\TCOS\Lab2\COS_Lab_1\COS_Lab_1\obj\Debug\COS_Lab_1.pdb

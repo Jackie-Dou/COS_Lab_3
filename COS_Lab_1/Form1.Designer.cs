@@ -33,15 +33,6 @@ namespace COS_Lab_1
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.signalChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txtSwing = new System.Windows.Forms.TextBox();
             this.txtFrequency = new System.Windows.Forms.TextBox();
@@ -54,17 +45,11 @@ namespace COS_Lab_1
             this.label4 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.labelError = new System.Windows.Forms.Label();
-            this.chartSwing = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chartPhase = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.cbbxSignal = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.restoreSignalChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.txtbxLimit = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.signalChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSwing)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartPhase)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.restoreSignalChart)).BeginInit();
             this.SuspendLayout();
             // 
             // signalChart
@@ -73,13 +58,13 @@ namespace COS_Lab_1
             this.signalChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.signalChart.Legends.Add(legend1);
-            this.signalChart.Location = new System.Drawing.Point(16, 55);
+            this.signalChart.Location = new System.Drawing.Point(12, 147);
             this.signalChart.Name = "signalChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.signalChart.Series.Add(series1);
-            this.signalChart.Size = new System.Drawing.Size(1248, 241);
+            this.signalChart.Size = new System.Drawing.Size(1245, 482);
             this.signalChart.TabIndex = 0;
             this.signalChart.Text = "chart1";
             // 
@@ -176,56 +161,6 @@ namespace COS_Lab_1
             this.labelError.Size = new System.Drawing.Size(0, 17);
             this.labelError.TabIndex = 13;
             // 
-            // chartSwing
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.chartSwing.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartSwing.Legends.Add(legend2);
-            this.chartSwing.Location = new System.Drawing.Point(16, 566);
-            this.chartSwing.Name = "chartSwing";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartSwing.Series.Add(series2);
-            this.chartSwing.Size = new System.Drawing.Size(597, 199);
-            this.chartSwing.TabIndex = 14;
-            this.chartSwing.Text = "chart1";
-            // 
-            // chartPhase
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chartPhase.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartPhase.Legends.Add(legend3);
-            this.chartPhase.Location = new System.Drawing.Point(673, 566);
-            this.chartPhase.Name = "chartPhase";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartPhase.Series.Add(series3);
-            this.chartPhase.Size = new System.Drawing.Size(591, 199);
-            this.chartPhase.TabIndex = 15;
-            this.chartPhase.Text = "chart2";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 546);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 17);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Амплитуда";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(670, 546);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 17);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Фаза";
-            // 
             // cbbxSignal
             // 
             this.cbbxSignal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -244,35 +179,32 @@ namespace COS_Lab_1
             this.label7.TabIndex = 19;
             this.label7.Text = "Введите тип сигнала";
             // 
-            // restoreSignalChart
+            // txtbxLimit
             // 
-            chartArea4.Name = "ChartArea1";
-            this.restoreSignalChart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.restoreSignalChart.Legends.Add(legend4);
-            this.restoreSignalChart.Location = new System.Drawing.Point(16, 302);
-            this.restoreSignalChart.Name = "restoreSignalChart";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.restoreSignalChart.Series.Add(series4);
-            this.restoreSignalChart.Size = new System.Drawing.Size(1248, 241);
-            this.restoreSignalChart.TabIndex = 20;
-            this.restoreSignalChart.Text = "chart1";
+            this.txtbxLimit.Location = new System.Drawing.Point(16, 69);
+            this.txtbxLimit.Name = "txtbxLimit";
+            this.txtbxLimit.Size = new System.Drawing.Size(209, 22);
+            this.txtbxLimit.TabIndex = 20;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(152, 17);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Введите ограничение";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(1276, 769);
-            this.Controls.Add(this.restoreSignalChart);
+            this.ClientSize = new System.Drawing.Size(1271, 632);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtbxLimit);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cbbxSignal);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.chartPhase);
-            this.Controls.Add(this.chartSwing);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label4);
@@ -290,9 +222,6 @@ namespace COS_Lab_1
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.signalChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSwing)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartPhase)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.restoreSignalChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,13 +241,10 @@ namespace COS_Lab_1
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Label labelError;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartSwing;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartPhase;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbbxSignal;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataVisualization.Charting.Chart restoreSignalChart;
+        private System.Windows.Forms.TextBox txtbxLimit;
+        private System.Windows.Forms.Label label5;
     }
 }
 
