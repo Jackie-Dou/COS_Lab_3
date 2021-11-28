@@ -97,7 +97,31 @@ namespace COS_Lab_1
             return;
         }
 
-
+        private bool IsRecoverable(double n, string[] limit, string filter)
+        {
+            switch (filter)
+            {
+                case "Нижних частот":
+                    if (n <= Int32.Parse(limit[0])) return true;
+                    else return false;
+                case "Верхних частот":
+                    if (n >= Int32.Parse(limit[0])) return true;
+                    else return false;
+                case "Полосовой":
+                    int a = Int32.Parse(limit[0]);
+                    int b = Int32.Parse(limit[1]);
+                    if (b<a)
+                    {
+                        a = a + b;
+                        b = a - b;//a+b-b =a
+                        a = a - b;//a+b-//a = b
+                    }
+                    if (n >= a && n<=b) return true;
+                    else return false;
+                default:
+                    return false;
+            }
+        }
         private double[] LimitLowOrdinates(double[] ordinates, int limit)
         {
             double[] lOrdinates = new double[ordinates.Count()];
@@ -128,15 +152,18 @@ namespace COS_Lab_1
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
             string type, filter;
-            int swing = 0, frequency = 0, limit = 0;
+            int swing = 0, frequency = 0;
+            string[] limit = { };
             double phase = 0;
 
             string msg = "Ошибка ввода";
             try
             {
+                string limitText = txtbxLimit.Text;
+                limit = limitText.Split(' ');
+
                 type = cbbxSignal.Text;
                 filter = cbbxFilter.Text;
-                limit = Int32.Parse(txtbxLimit.Text);
                 if (type != "Полигармонический")
                 {
                     swing = Int32.Parse(txtSwing.Text);
@@ -195,16 +222,19 @@ namespace COS_Lab_1
             }
             int M = N / 2;
             double[] amplOrdinates = new double[M];
+            double[] newAmplOrdinates = new double[M];
             double[] phaseOrdinates = new double[M];
             amplOrdinates = GetAmplitude(ordinates, N, M);
             phaseOrdinates = GetPhase(ordinates, N, M);
 
             double[] ordinatesRestore = new double[N];
-            ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M);
+            ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M, limit, filter);
+            newAmplOrdinates = GetAmplitude(ordinatesRestore, N, M);
 
-            ShowSpectres(amplOrdinates, phaseOrdinates, M);
 
-            switch (filter)
+            ShowSpectres(amplOrdinates, newAmplOrdinates, M);
+
+           /* switch (filter)
             {
                 case "Нижних частот":
                     //ordinates = LimitLowOrdinates(ordinates, limit);
@@ -215,7 +245,7 @@ namespace COS_Lab_1
                 case "Полосовой":
                     //ordinates = LimitZoneOrdinates(ordinates, limit);
                     break;
-            }
+            }*/
 
             ShowCharts(ordinates, ordinatesRestore, N);
             return;
@@ -261,24 +291,27 @@ namespace COS_Lab_1
             }
             return sum * 2.0 / N;
         }
-        private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M)
+        private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M, string[] limit, string filter)
         {
             double[] results = new double[N];
             for (int n = 0; n < N; n++)
             {
-                results[n] = GetRestoredOrdinate(amplitude, phase, n, N, M);
+                results[n] = GetRestoredOrdinate(amplitude, phase, n, N, M, limit, filter);
             }
             return results;
         }
 
-        private double GetRestoredOrdinate(double[] amplitude, double[] phase, int n, int N, int M)
+        private double GetRestoredOrdinate(double[] amplitude, double[] phase, int n, int N, int M, string[] limit, string filter)
         {
             double sum = 0;
             for (int R = 0; R < M; R++)
             {
-                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
-                sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
-                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N - phase[R]);
+                if(IsRecoverable(R, limit, filter))
+                {
+                    //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
+                    sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
+                    //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N - phase[R]);
+                }
             }
             return sum;
         }
