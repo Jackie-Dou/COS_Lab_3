@@ -29,13 +29,22 @@ namespace COS_Lab_1
             cbbxSignal.Items.Add("Гармонический");
             cbbxSignal.Items.Add("Полигармонический");
 
+            cbbxFilter.Items.Add("Нижних частот");
+            cbbxFilter.Items.Add("Верхних частот");
+            cbbxFilter.Items.Add("Полосовой");
+
             signalChart.Series.Add("1");
+            restoreSignalChart.Series.Add("1");
 
             signalChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             signalChart.Series[0].Color = Color.Red;
             signalChart.Series["1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             //signalChart.Series[0]["PixelPointWidth"] = "1";
 
+            restoreSignalChart.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            restoreSignalChart.Series[0].Color = Color.Green;
+            restoreSignalChart.Series["1"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            restoreSignalChart.Series["1"].Color = Color.Yellow;
         }
 
         private double[] GetHarmonic(int swing, int frequency, double phase, int N)
@@ -64,19 +73,32 @@ namespace COS_Lab_1
             return results;
         }
 
-        private void ShowCharts(double[] ordinates, int N)
+        private void ShowCharts(double[] ordinates, double[] restoreOrdinates, int N)
         {
             for (int n = 0; n < N; n++)
             {
                 signalChart.Series[0].Points.AddXY(n, ordinates[n]);
                 signalChart.Series["1"].Points.AddXY(n, ordinates[n]);
+
+                restoreSignalChart.Series[0].Points.AddXY(n, restoreOrdinates[n]);
+                restoreSignalChart.Series["1"].Points.AddXY(n, restoreOrdinates[n]);
+            }
+            return;
+        }
+
+        private void ShowSpectres(double[] amplOrdinates, double[] phaseOrdinates, int M)
+        {
+            for (int n = 0; n < M; n++)
+            {
+                chartSwing.Series[0].Points.AddXY(n, amplOrdinates[n]);
+                chartPhase.Series[0].Points.AddXY(n, phaseOrdinates[n]);
+
             }
             return;
         }
 
 
-
-        private double[] LimitOrdinates(double[] ordinates, int limit)
+        private double[] LimitLowOrdinates(double[] ordinates, int limit)
         {
             double[] lOrdinates = new double[ordinates.Count()];
             for (int n = 0; n < ordinates.Count(); n++)
@@ -98,10 +120,14 @@ namespace COS_Lab_1
         {
             signalChart.Series[0].Points.Clear();
             signalChart.Series["1"].Points.Clear();
+            restoreSignalChart.Series[0].Points.Clear();
+            restoreSignalChart.Series["1"].Points.Clear();
+            chartSwing.Series[0].Points.Clear();
+            chartPhase.Series[0].Points.Clear();
 
             int N = 0;
             string[] swings = { }, frequences = { }, phases = { };
-            string type;
+            string type, filter;
             int swing = 0, frequency = 0, limit = 0;
             double phase = 0;
 
@@ -109,6 +135,7 @@ namespace COS_Lab_1
             try
             {
                 type = cbbxSignal.Text;
+                filter = cbbxFilter.Text;
                 limit = Int32.Parse(txtbxLimit.Text);
                 if (type != "Полигармонический")
                 {
@@ -166,10 +193,94 @@ namespace COS_Lab_1
                     ordinates = GetHarmonic(swing, frequency, phase, N);
                     break;
             }
-            ordinates = LimitOrdinates(ordinates, limit);
+            int M = N / 2;
+            double[] amplOrdinates = new double[M];
+            double[] phaseOrdinates = new double[M];
+            amplOrdinates = GetAmplitude(ordinates, N, M);
+            phaseOrdinates = GetPhase(ordinates, N, M);
 
-            ShowCharts(ordinates, N);
+            double[] ordinatesRestore = new double[N];
+            ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M);
+
+            ShowSpectres(amplOrdinates, phaseOrdinates, M);
+
+            switch (filter)
+            {
+                case "Нижних частот":
+                    //ordinates = LimitLowOrdinates(ordinates, limit);
+                    break;
+                case "Верхних частот":
+                    //ordinates = LimitHighOrdinates(ordinates, limit);
+                    break;
+                case "Полосовой":
+                    //ordinates = LimitZoneOrdinates(ordinates, limit);
+                    break;
+            }
+
+            ShowCharts(ordinates, ordinatesRestore, N);
             return;
+        }
+
+        // для спектров
+        private double[] GetAmplitude(double[] sequence, int N, int M)
+        {
+            double[] results = new double[M];
+            for (int R = 0; R < M; R++)
+            {
+                results[R] = Math.Sqrt(Math.Pow(GetCoefA(sequence, N, R), 2) + Math.Pow(GetCoefB(sequence, N, R), 2));
+            }
+            return results;
+        }
+
+        private double[] GetPhase(double[] sequence, int N, int M)
+        {
+            double[] results = new double[M];
+            for (int R = 0; R < M; R++)
+            {
+                results[R] = Math.Atan(GetCoefB(sequence, N, R) / GetCoefA(sequence, N, R));
+            }
+            return results;
+        }
+
+        private double GetCoefA(double[] x, int N, int R)
+        {
+            double sum = 0;
+            for (int n = 0; n < N; n++)
+            {
+                sum += x[n] * Math.Cos(2.0 * Math.PI * n * R / N);
+            }
+            return sum * 2.0 / N;
+        }
+
+        private double GetCoefB(double[] x, int N, int R)
+        {
+            double sum = 0;
+            for (int n = 0; n < N; n++)
+            {
+                sum += x[n] * Math.Sin(2.0 * Math.PI * n * R / N);
+            }
+            return sum * 2.0 / N;
+        }
+        private double[] RestoreSequence(double[] amplitude, double[] phase, int N, int M)
+        {
+            double[] results = new double[N];
+            for (int n = 0; n < N; n++)
+            {
+                results[n] = GetRestoredOrdinate(amplitude, phase, n, N, M);
+            }
+            return results;
+        }
+
+        private double GetRestoredOrdinate(double[] amplitude, double[] phase, int n, int N, int M)
+        {
+            double sum = 0;
+            for (int R = 0; R < M; R++)
+            {
+                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
+                sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
+                //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N - phase[R]);
+            }
+            return sum;
         }
 
         // настройки ограничений ввода
