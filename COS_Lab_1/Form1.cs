@@ -220,7 +220,7 @@ namespace COS_Lab_1
                     ordinates = GetHarmonic(swing, frequency, phase, N);
                     break;
             }
-            int M = N / 2;
+            int M = N/2;
             double[] amplOrdinates = new double[M];
             double[] newAmplOrdinates = new double[M];
             double[] phaseOrdinates = new double[M];
