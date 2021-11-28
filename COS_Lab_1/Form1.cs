@@ -222,14 +222,17 @@ namespace COS_Lab_1
             }
             int M = N / 2;
             double[] amplOrdinates = new double[M];
+            double[] newAmplOrdinates = new double[M];
             double[] phaseOrdinates = new double[M];
             amplOrdinates = GetAmplitude(ordinates, N, M);
             phaseOrdinates = GetPhase(ordinates, N, M);
 
             double[] ordinatesRestore = new double[N];
             ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M, limit, filter);
+            newAmplOrdinates = GetAmplitude(ordinatesRestore, N, M);
 
-            ShowSpectres(amplOrdinates, phaseOrdinates, M);
+
+            ShowSpectres(amplOrdinates, newAmplOrdinates, M);
 
            /* switch (filter)
             {
@@ -303,7 +306,7 @@ namespace COS_Lab_1
             double sum = 0;
             for (int R = 0; R < M; R++)
             {
-                if(IsRecoverable(M, limit, filter))
+                if(IsRecoverable(R, limit, filter))
                 {
                     //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
                     sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
