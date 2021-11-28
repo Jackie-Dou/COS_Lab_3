@@ -30,7 +30,10 @@ namespace COS_Lab_3_2
         private void InitializeComponent()
         {
             this.btnLoadImage = new System.Windows.Forms.Button();
-            this.panelImage = new System.Windows.Forms.Panel();
+            this.picbxImage = new System.Windows.Forms.PictureBox();
+            this.picbxImageRestore = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picbxImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbxImageRestore)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoadImage
@@ -43,29 +46,44 @@ namespace COS_Lab_3_2
             this.btnLoadImage.UseVisualStyleBackColor = true;
             this.btnLoadImage.Click += new System.EventHandler(this.btnLoadImage_Click);
             // 
-            // panelImage
+            // picbxImage
             // 
-            this.panelImage.Location = new System.Drawing.Point(255, 17);
-            this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(533, 421);
-            this.panelImage.TabIndex = 2;
+            this.picbxImage.Location = new System.Drawing.Point(12, 51);
+            this.picbxImage.Name = "picbxImage";
+            this.picbxImage.Size = new System.Drawing.Size(584, 506);
+            this.picbxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picbxImage.TabIndex = 2;
+            this.picbxImage.TabStop = false;
+            // 
+            // picbxImageRestore
+            // 
+            this.picbxImageRestore.Location = new System.Drawing.Point(655, 51);
+            this.picbxImageRestore.Name = "picbxImageRestore";
+            this.picbxImageRestore.Size = new System.Drawing.Size(584, 506);
+            this.picbxImageRestore.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picbxImageRestore.TabIndex = 3;
+            this.picbxImageRestore.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.panelImage);
+            this.ClientSize = new System.Drawing.Size(1333, 569);
+            this.Controls.Add(this.picbxImageRestore);
+            this.Controls.Add(this.picbxImage);
             this.Controls.Add(this.btnLoadImage);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.picbxImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picbxImageRestore)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Button btnLoadImage;
-        private System.Windows.Forms.Panel panelImage;
+        private System.Windows.Forms.PictureBox picbxImage;
+        private System.Windows.Forms.PictureBox picbxImageRestore;
     }
 }
 

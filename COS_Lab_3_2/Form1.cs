@@ -28,17 +28,13 @@ namespace COS_Lab_3_2
 
             try
             {
-                image = Image.FromFile(openDialog.FileName);
+                picbxImage.Image = Image.FromFile(openDialog.FileName);
             }
             catch (OutOfMemoryException ex)
             {
                 MessageBox.Show("Ошибка чтения картинки");
                 return;
             }
-
-            panelImage.AutoScroll = true;
-            panelImage.AutoScrollMinSize = image.Size;
-            panelImage.Invalidate();
         }
     }
 }
