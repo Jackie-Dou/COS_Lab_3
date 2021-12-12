@@ -13,16 +13,11 @@ namespace COS_Lab_3_2
 {
     public partial class Form1 : Form
     {
-        Image image;
+        Bitmap image;
 
         public Form1()
         {
             InitializeComponent();
-            btNoFilter.Checked = true;
-            btBlurFilter.Checked = false;
-            btEmbossingFilter.Checked = false;
-            btSharpnessFilter.Checked = false;
-            btEdgeDetectionFilter.Checked = false;
         }
 
         private void btnLoadImage_Click(object sender, EventArgs e)
@@ -34,7 +29,12 @@ namespace COS_Lab_3_2
 
             image = new Bitmap(openDialog.FileName, true);
 
-            
+            btNoFilter.Checked = true;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = false;
+
             try
             {
                 picbxImage.Image = image; //вот это вывод битмапа
@@ -62,7 +62,11 @@ namespace COS_Lab_3_2
 
             if (currentFilter == null)
             {
-
+                picbxImageRestore.Image = image;
+            }
+            else
+            {
+                picbxImageRestore.Image = Convolution.ApplyFilter(image, currentFilter);
             }
         }
 

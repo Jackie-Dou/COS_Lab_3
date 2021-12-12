@@ -44,9 +44,9 @@ namespace COS_Lab_3_2
             // 
             // btnLoadImage
             // 
-            this.btnLoadImage.Location = new System.Drawing.Point(1041, 531);
+            this.btnLoadImage.Location = new System.Drawing.Point(12, 12);
             this.btnLoadImage.Name = "btnLoadImage";
-            this.btnLoadImage.Size = new System.Drawing.Size(181, 28);
+            this.btnLoadImage.Size = new System.Drawing.Size(181, 38);
             this.btnLoadImage.TabIndex = 1;
             this.btnLoadImage.Text = "Загрузить изображение";
             this.btnLoadImage.UseVisualStyleBackColor = true;
@@ -54,7 +54,7 @@ namespace COS_Lab_3_2
             // 
             // picbxImage
             // 
-            this.picbxImage.Location = new System.Drawing.Point(12, 12);
+            this.picbxImage.Location = new System.Drawing.Point(199, 12);
             this.picbxImage.Name = "picbxImage";
             this.picbxImage.Size = new System.Drawing.Size(584, 506);
             this.picbxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -63,7 +63,7 @@ namespace COS_Lab_3_2
             // 
             // picbxImageRestore
             // 
-            this.picbxImageRestore.Location = new System.Drawing.Point(638, 12);
+            this.picbxImageRestore.Location = new System.Drawing.Point(804, 12);
             this.picbxImageRestore.Name = "picbxImageRestore";
             this.picbxImageRestore.Size = new System.Drawing.Size(584, 506);
             this.picbxImageRestore.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -73,68 +73,68 @@ namespace COS_Lab_3_2
             // btNoFilter
             // 
             this.btNoFilter.AutoSize = true;
-            this.btNoFilter.Location = new System.Drawing.Point(12, 535);
+            this.btNoFilter.Location = new System.Drawing.Point(12, 76);
             this.btNoFilter.Name = "btNoFilter";
             this.btNoFilter.Size = new System.Drawing.Size(116, 21);
             this.btNoFilter.TabIndex = 5;
             this.btNoFilter.TabStop = true;
             this.btNoFilter.Text = "Без Фильтра";
             this.btNoFilter.UseVisualStyleBackColor = true;
-            this.btNoFilter.CheckedChanged += new System.EventHandler(this.btNoFilter_CheckedChanged);
+            this.btNoFilter.Click += new System.EventHandler(this.btNoFilter_CheckedChanged);
             // 
             // btBlurFilter
             // 
             this.btBlurFilter.AutoSize = true;
-            this.btBlurFilter.Location = new System.Drawing.Point(134, 535);
+            this.btBlurFilter.Location = new System.Drawing.Point(12, 103);
             this.btBlurFilter.Name = "btBlurFilter";
             this.btBlurFilter.Size = new System.Drawing.Size(95, 21);
             this.btBlurFilter.TabIndex = 6;
             this.btBlurFilter.TabStop = true;
             this.btBlurFilter.Text = "Размытие";
             this.btBlurFilter.UseVisualStyleBackColor = true;
-            this.btBlurFilter.CheckedChanged += new System.EventHandler(this.btBlurFilter_CheckedChanged);
+            this.btBlurFilter.Click += new System.EventHandler(this.btBlurFilter_CheckedChanged);
             // 
             // btSharpnessFilter
             // 
             this.btSharpnessFilter.AutoSize = true;
-            this.btSharpnessFilter.Location = new System.Drawing.Point(283, 535);
+            this.btSharpnessFilter.Location = new System.Drawing.Point(12, 130);
             this.btSharpnessFilter.Name = "btSharpnessFilter";
             this.btSharpnessFilter.Size = new System.Drawing.Size(89, 21);
             this.btSharpnessFilter.TabIndex = 7;
             this.btSharpnessFilter.TabStop = true;
             this.btSharpnessFilter.Text = "Резкость";
             this.btSharpnessFilter.UseVisualStyleBackColor = true;
-            this.btSharpnessFilter.CheckedChanged += new System.EventHandler(this.btSharpnessFilter_CheckedChanged);
+            this.btSharpnessFilter.Click += new System.EventHandler(this.btSharpnessFilter_CheckedChanged);
             // 
             // btEmbossingFilter
             // 
             this.btEmbossingFilter.AutoSize = true;
-            this.btEmbossingFilter.Location = new System.Drawing.Point(405, 535);
+            this.btEmbossingFilter.Location = new System.Drawing.Point(12, 157);
             this.btEmbossingFilter.Name = "btEmbossingFilter";
             this.btEmbossingFilter.Size = new System.Drawing.Size(96, 21);
             this.btEmbossingFilter.TabIndex = 8;
             this.btEmbossingFilter.TabStop = true;
             this.btEmbossingFilter.Text = "Трафарет";
             this.btEmbossingFilter.UseVisualStyleBackColor = true;
-            this.btEmbossingFilter.CheckedChanged += new System.EventHandler(this.btEmbossingFilter_CheckedChanged);
+            this.btEmbossingFilter.Click += new System.EventHandler(this.btEmbossingFilter_CheckedChanged);
             // 
             // btEdgeDetectionFilter
             // 
             this.btEdgeDetectionFilter.AutoSize = true;
-            this.btEdgeDetectionFilter.Location = new System.Drawing.Point(548, 535);
+            this.btEdgeDetectionFilter.Location = new System.Drawing.Point(12, 184);
             this.btEdgeDetectionFilter.Name = "btEdgeDetectionFilter";
             this.btEdgeDetectionFilter.Size = new System.Drawing.Size(87, 21);
             this.btEdgeDetectionFilter.TabIndex = 9;
             this.btEdgeDetectionFilter.TabStop = true;
             this.btEdgeDetectionFilter.Text = "Границы";
             this.btEdgeDetectionFilter.UseVisualStyleBackColor = true;
-            this.btEdgeDetectionFilter.CheckedChanged += new System.EventHandler(this.btEdgeDetectionFilter_CheckedChanged);
+            this.btEdgeDetectionFilter.Click += new System.EventHandler(this.btEdgeDetectionFilter_CheckedChanged);
             // 
             // btApplyFilter
             // 
-            this.btApplyFilter.Location = new System.Drawing.Point(810, 531);
+            this.btApplyFilter.Location = new System.Drawing.Point(12, 490);
             this.btApplyFilter.Name = "btApplyFilter";
-            this.btApplyFilter.Size = new System.Drawing.Size(181, 28);
+            this.btApplyFilter.Size = new System.Drawing.Size(145, 28);
             this.btApplyFilter.TabIndex = 10;
             this.btApplyFilter.Text = "Применить фильтр";
             this.btApplyFilter.UseVisualStyleBackColor = true;
@@ -144,7 +144,7 @@ namespace COS_Lab_3_2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 571);
+            this.ClientSize = new System.Drawing.Size(1401, 524);
             this.Controls.Add(this.btApplyFilter);
             this.Controls.Add(this.btEdgeDetectionFilter);
             this.Controls.Add(this.btEmbossingFilter);

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace COS_Lab_3_2
 {
-    public class Convolution
+    public static class Convolution
     {
-        public Bitmap ApplyFilter(Bitmap sourceImage, Filter filter)
+        public static Bitmap ApplyFilter(Bitmap sourceImage, Filter filter)
         {
             int width = sourceImage.Width;
             int height = sourceImage.Height;
@@ -28,12 +28,17 @@ namespace COS_Lab_3_2
                 while (x < width - (kernelHeight - 1))
                 {
                     List<List<Color>> pixels = new List<List<Color>>();
+                    for (int i = 0; i < kernelHeight; i++)
+                    {
+                        pixels.Add(new List<Color>());
+                    }
 
                     for (int i = 0; i < kernelHeight; i++)
                     {
                         for (int j = 0; j< kernelHeight; j++)
                         {
-                            pixels[i][j] = sourceImage.GetPixel(x+i, y+j);
+                            pixels[i].Add(sourceImage.GetPixel(x + i, y + j));
+                            //pixels[i][j] = sourceImage.GetPixel(x+i, y+j);
                         }
                     }
 
@@ -43,21 +48,23 @@ namespace COS_Lab_3_2
                     {
                         for (int j = 0; j < kernelHeight; j++)
                         {
-                            sumR += (int)(Convert.ToDouble(pixels[i][j].R) * kernel[i, j] + filter.delta);
-                            sumG += (int)(Convert.ToDouble(pixels[i][j].G) * kernel[i, j] + filter.delta);
-                            sumB += (int)(Convert.ToDouble(pixels[i][j].B) * kernel[i, j] + filter.delta);
+                            sumR += (int)(Convert.ToDouble(pixels[i][j].R) * kernel[i, j]);
+                            sumG += (int)(Convert.ToDouble(pixels[i][j].G) * kernel[i, j]);
+                            sumB += (int)(Convert.ToDouble(pixels[i][j].B) * kernel[i, j]);
                         }
                     }
 
-                    sumR = sumR / filter.divider;
-                    sumG = sumR / filter.divider;
-                    sumB = sumR / filter.divider;
+                    sumR = sumR / filter.divider + filter.delta;
+                    sumG = sumG / filter.divider + filter.delta;
+                    sumB = sumB / filter.divider + filter.delta;
                     int a = (int)pixels[centralKernel][centralKernel].A;
 
                     Color newColor = Color.FromArgb(a, NormalizeIntToBitValue(sumR), NormalizeIntToBitValue(sumG), NormalizeIntToBitValue(sumB));
 
                     result.SetPixel(x + centralKernel, y + centralKernel, newColor);
+                    x++;
                 }
+                y++;
             }
 
 
@@ -81,9 +88,7 @@ namespace COS_Lab_3_2
             return result;
         }
 
-
-
-        public int NormalizeIntToBitValue(int color)
+        public static int NormalizeIntToBitValue(int color)
         {
             if (color > 255)
             {

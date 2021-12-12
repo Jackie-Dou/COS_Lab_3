@@ -8,3 +8,13 @@ F:\Univer\Course_4_Term_1\TCOS\Lab3\COS_Lab_1\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.
 F:\Univer\Course_4_Term_1\TCOS\Lab3\COS_Lab_1\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.csproj.CoreCompileInputs.cache
 F:\Univer\Course_4_Term_1\TCOS\Lab3\COS_Lab_1\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.exe
 F:\Univer\Course_4_Term_1\TCOS\Lab3\COS_Lab_1\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.pdb
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\bin\Debug\COS_Lab_3_2.exe.config
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\bin\Debug\COS_Lab_3_2.exe
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\bin\Debug\COS_Lab_3_2.pdb
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.csproj.AssemblyReference.cache
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.Form1.resources
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.Properties.Resources.resources
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.csproj.GenerateResource.cache
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.csproj.CoreCompileInputs.cache
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.exe
+f:\University\COS\COS_Lab_3\COS_Lab_3_2\obj\Debug\COS_Lab_3_2.pdb
