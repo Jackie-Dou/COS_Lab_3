@@ -43,7 +43,6 @@ namespace COS_Lab_3_2
                 MessageBox.Show("Ошибка чтения картинки");
                 return;
             }
-
             //превратили в список точек с цветами
             foreach (byte pointByte in imgdata)
             {

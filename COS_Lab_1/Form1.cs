@@ -26,7 +26,7 @@ namespace COS_Lab_1
             cbbxN.Items.Add("1024");
             cbbxN.Items.Add("2048");
 
-            cbbxSignal.Items.Add("Гармонический");
+            //cbbxSignal.Items.Add("Гармонический");
             cbbxSignal.Items.Add("Полигармонический");
 
             cbbxFilter.Items.Add("Нижних частот");
@@ -97,15 +97,15 @@ namespace COS_Lab_1
             return;
         }
 
-        private bool IsRecoverable(double n, string[] limit, string filter)
+        private bool IsRecoverable(double n, string[] limit, string filter, int M)
         {
             switch (filter)
             {
                 case "Нижних частот":
-                    if (n <= Int32.Parse(limit[0])) return true;
+                    if (n <= Int32.Parse(limit[0]) || n >= M - Int32.Parse(limit[0])) return true;
                     else return false;
                 case "Верхних частот":
-                    if (n >= Int32.Parse(limit[0])) return true;
+                    if (n >= Int32.Parse(limit[0]) || n<= M - Int32.Parse(limit[0])) return true;
                     else return false;
                 case "Полосовой":
                     int a = Int32.Parse(limit[0]);
@@ -116,7 +116,7 @@ namespace COS_Lab_1
                         b = a - b;//a+b-b =a
                         a = a - b;//a+b-//a = b
                     }
-                    if (n >= a && n<=b) return true;
+                    if ((n >= a && n<=b) || (n<=M-a && n>=M-b)) return true;
                     else return false;
                 default:
                     return false;
@@ -193,14 +193,32 @@ namespace COS_Lab_1
                         throw new Exception("Не весь ввод");
                     }
 
-                    if (!IsAccessibleFrequencesLogic(frequences, N))
+                    /*if (!IsAccessibleFrequencesLogic(frequences, N))
                     {
                         msg = "Логические ограничения!";
                         throw new Exception("Логические ограничения");
-                    }
+                    }*/
 
                 }
-            } catch
+                if (filter == "Полосовой")
+                {
+                    if (limit.Length != 2)
+                    {
+                        msg = "Не весь ввод!";
+                        throw new Exception("Логические ограничения");
+                    }
+                }
+                else
+                {
+                    if (limit.Length < 1)
+                    {
+                        msg = "Не весь ввод!";
+                        throw new Exception("Логические ограничения");
+                    }
+                }
+
+            } 
+            catch
             {
                 MessageBox.Show(
                     msg,
@@ -230,7 +248,6 @@ namespace COS_Lab_1
             double[] ordinatesRestore = new double[N];
             ordinatesRestore = RestoreSequence(amplOrdinates, phaseOrdinates, N, M, limit, filter);
             newAmplOrdinates = GetAmplitude(ordinatesRestore, N, M);
-
 
             ShowSpectres(amplOrdinates, newAmplOrdinates, M);
 
@@ -306,7 +323,7 @@ namespace COS_Lab_1
             double sum = 0;
             for (int R = 0; R < M; R++)
             {
-                if(IsRecoverable(R, limit, filter))
+                if(IsRecoverable(R, limit, filter, M))
                 {
                     //sum += amplitude[R] * Math.Sin(2 * Math.PI * R * n / N + phase[R]);
                     sum += amplitude[R] * Math.Cos(2.0 * Math.PI * R * n / N - phase[R]);
