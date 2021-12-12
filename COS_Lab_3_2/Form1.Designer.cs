@@ -32,21 +32,17 @@ namespace COS_Lab_3_2
             this.btnLoadImage = new System.Windows.Forms.Button();
             this.picbxImage = new System.Windows.Forms.PictureBox();
             this.picbxImageRestore = new System.Windows.Forms.PictureBox();
-            this.btNoFilter = new System.Windows.Forms.RadioButton();
-            this.btBlurFilter = new System.Windows.Forms.RadioButton();
-            this.btSharpnessFilter = new System.Windows.Forms.RadioButton();
-            this.btEmbossingFilter = new System.Windows.Forms.RadioButton();
-            this.btEdgeDetectionFilter = new System.Windows.Forms.RadioButton();
             this.btApplyFilter = new System.Windows.Forms.Button();
+            this.cbbxFilters = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbxImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbxImageRestore)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoadImage
             // 
-            this.btnLoadImage.Location = new System.Drawing.Point(12, 12);
+            this.btnLoadImage.Location = new System.Drawing.Point(218, 12);
             this.btnLoadImage.Name = "btnLoadImage";
-            this.btnLoadImage.Size = new System.Drawing.Size(181, 38);
+            this.btnLoadImage.Size = new System.Drawing.Size(181, 24);
             this.btnLoadImage.TabIndex = 1;
             this.btnLoadImage.Text = "Загрузить изображение";
             this.btnLoadImage.UseVisualStyleBackColor = true;
@@ -54,7 +50,8 @@ namespace COS_Lab_3_2
             // 
             // picbxImage
             // 
-            this.picbxImage.Location = new System.Drawing.Point(199, 12);
+            this.picbxImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picbxImage.Location = new System.Drawing.Point(12, 61);
             this.picbxImage.Name = "picbxImage";
             this.picbxImage.Size = new System.Drawing.Size(584, 506);
             this.picbxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -63,94 +60,40 @@ namespace COS_Lab_3_2
             // 
             // picbxImageRestore
             // 
-            this.picbxImageRestore.Location = new System.Drawing.Point(804, 12);
+            this.picbxImageRestore.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picbxImageRestore.Location = new System.Drawing.Point(618, 61);
             this.picbxImageRestore.Name = "picbxImageRestore";
             this.picbxImageRestore.Size = new System.Drawing.Size(584, 506);
             this.picbxImageRestore.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picbxImageRestore.TabIndex = 3;
             this.picbxImageRestore.TabStop = false;
             // 
-            // btNoFilter
-            // 
-            this.btNoFilter.AutoSize = true;
-            this.btNoFilter.Location = new System.Drawing.Point(12, 76);
-            this.btNoFilter.Name = "btNoFilter";
-            this.btNoFilter.Size = new System.Drawing.Size(116, 21);
-            this.btNoFilter.TabIndex = 5;
-            this.btNoFilter.TabStop = true;
-            this.btNoFilter.Text = "Без Фильтра";
-            this.btNoFilter.UseVisualStyleBackColor = true;
-            this.btNoFilter.Click += new System.EventHandler(this.btNoFilter_CheckedChanged);
-            // 
-            // btBlurFilter
-            // 
-            this.btBlurFilter.AutoSize = true;
-            this.btBlurFilter.Location = new System.Drawing.Point(12, 103);
-            this.btBlurFilter.Name = "btBlurFilter";
-            this.btBlurFilter.Size = new System.Drawing.Size(95, 21);
-            this.btBlurFilter.TabIndex = 6;
-            this.btBlurFilter.TabStop = true;
-            this.btBlurFilter.Text = "Размытие";
-            this.btBlurFilter.UseVisualStyleBackColor = true;
-            this.btBlurFilter.Click += new System.EventHandler(this.btBlurFilter_CheckedChanged);
-            // 
-            // btSharpnessFilter
-            // 
-            this.btSharpnessFilter.AutoSize = true;
-            this.btSharpnessFilter.Location = new System.Drawing.Point(12, 130);
-            this.btSharpnessFilter.Name = "btSharpnessFilter";
-            this.btSharpnessFilter.Size = new System.Drawing.Size(89, 21);
-            this.btSharpnessFilter.TabIndex = 7;
-            this.btSharpnessFilter.TabStop = true;
-            this.btSharpnessFilter.Text = "Резкость";
-            this.btSharpnessFilter.UseVisualStyleBackColor = true;
-            this.btSharpnessFilter.Click += new System.EventHandler(this.btSharpnessFilter_CheckedChanged);
-            // 
-            // btEmbossingFilter
-            // 
-            this.btEmbossingFilter.AutoSize = true;
-            this.btEmbossingFilter.Location = new System.Drawing.Point(12, 157);
-            this.btEmbossingFilter.Name = "btEmbossingFilter";
-            this.btEmbossingFilter.Size = new System.Drawing.Size(96, 21);
-            this.btEmbossingFilter.TabIndex = 8;
-            this.btEmbossingFilter.TabStop = true;
-            this.btEmbossingFilter.Text = "Трафарет";
-            this.btEmbossingFilter.UseVisualStyleBackColor = true;
-            this.btEmbossingFilter.Click += new System.EventHandler(this.btEmbossingFilter_CheckedChanged);
-            // 
-            // btEdgeDetectionFilter
-            // 
-            this.btEdgeDetectionFilter.AutoSize = true;
-            this.btEdgeDetectionFilter.Location = new System.Drawing.Point(12, 184);
-            this.btEdgeDetectionFilter.Name = "btEdgeDetectionFilter";
-            this.btEdgeDetectionFilter.Size = new System.Drawing.Size(87, 21);
-            this.btEdgeDetectionFilter.TabIndex = 9;
-            this.btEdgeDetectionFilter.TabStop = true;
-            this.btEdgeDetectionFilter.Text = "Границы";
-            this.btEdgeDetectionFilter.UseVisualStyleBackColor = true;
-            this.btEdgeDetectionFilter.Click += new System.EventHandler(this.btEdgeDetectionFilter_CheckedChanged);
-            // 
             // btApplyFilter
             // 
-            this.btApplyFilter.Location = new System.Drawing.Point(12, 490);
+            this.btApplyFilter.Location = new System.Drawing.Point(405, 12);
             this.btApplyFilter.Name = "btApplyFilter";
-            this.btApplyFilter.Size = new System.Drawing.Size(145, 28);
+            this.btApplyFilter.Size = new System.Drawing.Size(181, 24);
             this.btApplyFilter.TabIndex = 10;
             this.btApplyFilter.Text = "Применить фильтр";
             this.btApplyFilter.UseVisualStyleBackColor = true;
             this.btApplyFilter.Click += new System.EventHandler(this.btApplyFilter_Click);
             // 
+            // cbbxFilters
+            // 
+            this.cbbxFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbxFilters.FormattingEnabled = true;
+            this.cbbxFilters.Location = new System.Drawing.Point(12, 12);
+            this.cbbxFilters.Name = "cbbxFilters";
+            this.cbbxFilters.Size = new System.Drawing.Size(191, 24);
+            this.cbbxFilters.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1401, 524);
+            this.ClientSize = new System.Drawing.Size(1214, 580);
+            this.Controls.Add(this.cbbxFilters);
             this.Controls.Add(this.btApplyFilter);
-            this.Controls.Add(this.btEdgeDetectionFilter);
-            this.Controls.Add(this.btEmbossingFilter);
-            this.Controls.Add(this.btSharpnessFilter);
-            this.Controls.Add(this.btBlurFilter);
-            this.Controls.Add(this.btNoFilter);
             this.Controls.Add(this.picbxImageRestore);
             this.Controls.Add(this.picbxImage);
             this.Controls.Add(this.btnLoadImage);
@@ -159,7 +102,6 @@ namespace COS_Lab_3_2
             ((System.ComponentModel.ISupportInitialize)(this.picbxImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbxImageRestore)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -167,12 +109,8 @@ namespace COS_Lab_3_2
         private System.Windows.Forms.Button btnLoadImage;
         private System.Windows.Forms.PictureBox picbxImage;
         private System.Windows.Forms.PictureBox picbxImageRestore;
-        private System.Windows.Forms.RadioButton btNoFilter;
-        private System.Windows.Forms.RadioButton btBlurFilter;
-        private System.Windows.Forms.RadioButton btSharpnessFilter;
-        private System.Windows.Forms.RadioButton btEmbossingFilter;
-        private System.Windows.Forms.RadioButton btEdgeDetectionFilter;
         private System.Windows.Forms.Button btApplyFilter;
+        private System.Windows.Forms.ComboBox cbbxFilters;
     }
 }
 
