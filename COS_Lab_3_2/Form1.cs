@@ -19,6 +19,11 @@ namespace COS_Lab_3_2
         public Form1()
         {
             InitializeComponent();
+            btNoFilter.Checked = true;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = false;
         }
 
         private void btnLoadImage_Click(object sender, EventArgs e)
@@ -64,6 +69,71 @@ namespace COS_Lab_3_2
                 picbxImageRestore.Image = Image.FromStream(ms);
             }
 
+        }
+
+        private void btApplyFilter_Click(object sender, EventArgs e)
+        {
+            Filter currentFilter = null;
+            if (btNoFilter.Checked)
+                currentFilter = null;
+            else if (btBlurFilter.Checked)
+                currentFilter = new BlurFilter();
+            else if (btEmbossingFilter.Checked)
+                currentFilter = new EmbossingFilter();
+            else if (btSharpnessFilter.Checked)
+                currentFilter = new SharpnessFilter();
+            else if (btEdgeDetectionFilter.Checked)
+                currentFilter = new EdgeDetectionFilter();
+
+            if (currentFilter == null)
+            {
+
+            }
+        }
+
+        private void btNoFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            btNoFilter.Checked = true;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = false;
+        }
+
+        private void btBlurFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            btNoFilter.Checked = false;
+            btBlurFilter.Checked = true;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = false;
+        }
+
+        private void btSharpnessFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            btNoFilter.Checked = false;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = true;
+            btEdgeDetectionFilter.Checked = false;
+        }
+
+        private void btEmbossingFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            btNoFilter.Checked = false;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = true;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = false;
+        }
+
+        private void btEdgeDetectionFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            btNoFilter.Checked = false;
+            btBlurFilter.Checked = false;
+            btEmbossingFilter.Checked = false;
+            btSharpnessFilter.Checked = false;
+            btEdgeDetectionFilter.Checked = true;
         }
     }
 }

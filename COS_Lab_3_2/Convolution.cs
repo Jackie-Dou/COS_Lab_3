@@ -43,9 +43,9 @@ namespace COS_Lab_3_2
                     {
                         for (int j = 0; j < kernelHeight; j++)
                         {
-                            sumR += (int)(Convert.ToDouble(pixels[i][j].R) * kernel[i, j]);
-                            sumG += (int)(Convert.ToDouble(pixels[i][j].G) * kernel[i, j]);
-                            sumB += (int)(Convert.ToDouble(pixels[i][j].B) * kernel[i, j]);
+                            sumR += (int)(Convert.ToDouble(pixels[i][j].R) * kernel[i, j] + filter.delta);
+                            sumG += (int)(Convert.ToDouble(pixels[i][j].G) * kernel[i, j] + filter.delta);
+                            sumB += (int)(Convert.ToDouble(pixels[i][j].B) * kernel[i, j] + filter.delta);
                         }
                     }
 
