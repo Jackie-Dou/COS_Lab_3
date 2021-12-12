@@ -81,7 +81,7 @@ namespace COS_Lab_3_2
             {
                 for (int j = 0; j < centralKernel; j++)
                 {
-                    result.SetPixel(j, i, sourceImage.GetPixel(i, j));
+                    result.SetPixel(j, i, sourceImage.GetPixel(j, i));
                     result.SetPixel(width - 1 - j, i, sourceImage.GetPixel(width - 1 - j, i));
                 }
             }
